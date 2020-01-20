@@ -13,7 +13,16 @@ public class Main {
 		System.out.println("123");//testtest
 //>>>>>>> branch 'master' of https://github.com/osman245/venn.git
 		
+
 		System.out.println("abcd");
+
+		for(int i = 0; i < 3; i++) {
+			System.out.println("Www");
+		}
+		System.out.println("cool cool");
+		
+		
+
 		//ydtgd
 		
 	}

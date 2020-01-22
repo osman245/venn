@@ -1,5 +1,6 @@
 package Venn;
 
+<<<<<<< HEAD
 public class Main {
 	public static void main(String[] args) {
 	
@@ -20,11 +21,9 @@ public class Main {
 		}
 		//ydtgd
 >>>>>>> origin/warsame
+=======
+>>>>>>> 946ae75e44250763977e2599d8b4983cf4855cee
 		
-		for(int i=0; i< 10; i++)
-		{
-			System.out.println(i);
-		}
-	
 	}
+	
 }

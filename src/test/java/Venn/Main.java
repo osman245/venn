@@ -1,29 +1,24 @@
 package Venn;
 
-<<<<<<< HEAD
-public class Main {
-	public static void main(String[] args) {
-	
-=======
-		System.out.println("Hello");
-		System.out.println(" I am cool");
-//<<<<<<< HEAD
-		System.out.println("It is jada");//test for push
-		System.out.println("It is war");//test for push
-		//abcss
-////=======
-		System.out.println("It is jada");//test for push part 2, more testing
-		System.out.println("123");//testtest
-//>>>>>>> branch 'master' of https://github.com/osman245/venn.git
+
+
+
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
 		
-		for(int i = 0; i < 3; i++) {
-			System.out.println("Www");
-		}
-		//ydtgd
->>>>>>> origin/warsame
-=======
->>>>>>> 946ae75e44250763977e2599d8b4983cf4855cee
+		Venn v = new Venn();
 		
 	}
 	
+	public static void main(String[] args) {
+		launch(args);
+		}
+
 }

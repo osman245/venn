@@ -10,15 +10,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void start(Stage primaryStage) throws Exception
+	{
 		Venn v = new Venn();
-		
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		launch(args);
-		}
+	}
 
 }

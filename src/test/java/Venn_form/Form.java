@@ -27,6 +27,8 @@ public class Form
 	//List<Boolean> selections;
 	private GridPane root;
 	private VBox test = new VBox(20);
+	private  List<String> codes;
+	private String codeTxt;
 
 	public Form()
 	{
@@ -69,7 +71,8 @@ public class Form
 		root = new GridPane();
 		root.setPadding(new Insets(15,15,15,15));
 		root.setAlignment(Pos.TOP_CENTER);
-		root.setHgap(30);
+		root.setHgap(20);
+		root.setVgap(20);
 
 		// adding components 
 
@@ -83,14 +86,14 @@ public class Form
 		cboRegions.getItems().addAll("2","3");
 		cboRegions.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 
-		//temp prob wont implement 
+		//add later
 		/*
 		 * Label lblShapes = new Label("Shape type:"); lblShapes.
 		 * setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px; -fx-font-weight:bold;");
 		 * 
 		 * ComboBox<String> cboShapes = new ComboBox<String>();
 		 * cboShapes.setPromptText("select a shape");
-		 * cboShapes.getItems().addAll("circle","square");
+		 * cboShapes.getItems().addAll("circle","rounded rectangle");
 		 * cboShapes.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 		 * cboShapes.setPrefWidth(cboRegions.getPrefWidth());
 		 */
@@ -100,15 +103,16 @@ public class Form
 
 		//these lists will contain various set relationships for the users to check off
 		List<CheckBox> chkBoxes = new ArrayList<CheckBox>();
-
+		codes = new ArrayList<String>();
+		codes.add("1");
+		codes.add("111");
+		codes.add("110");
+		codes.add("101");
 		//filling the sets with the needed check boxes and labels
 		cboRegions.setOnAction(e->{
 			if (cboRegions.getValue() != null)
 				fillCheckArray(cboRegions.getValue(), chkBoxes);
 		});
-
-
-
 
 
 		root.add(lblRegions,0,0);
@@ -129,8 +133,6 @@ public class Form
 
 	private void fillCheckArray(String value, List<CheckBox> c)
 	{
-
-
 		
 		if(test.getChildren().size() >0) {
 			test.getChildren().removeAll(c);
@@ -154,31 +156,38 @@ public class Form
 		}
 
 		//selections = new ArrayList<Boolean>();
-
-
-
 		for( CheckBox chk : c)
 		{
+			chk.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
+			chk.setId("0");
 			test.getChildren().add(chk);
 			chk.setOnAction(e->{
 				if(chk.isSelected())
-				{
 					chk.setId("1");
-					System.out.println("1");
-				}
 				else
-				{
 					chk.setId("0");
-					System.out.println("0");
+				
+				codeTxt ="";
+				for(int i=0; i< c.size(); i++)
+				{
+					codeTxt += c.get(i).getId();
+				}
+				
+				if(!codes.contains(codeTxt))
+				{
+					//System.err.println("please select more intersection options to view a preview "+"code: "+codeTxt);
 				}
 			});
 		}
 
-
+		
+		
+		
 		if(!root.getChildren().contains(test))
 		root.add(test, 0, 1);
 	}
 
+	
 	public void setButton(Button b)
 	{
 		this.b = b;

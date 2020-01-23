@@ -155,6 +155,8 @@ public class Form
 
 		}
 
+		Label lblPreview = new Label("Preview");
+		
 		//selections = new ArrayList<Boolean>();
 		for( CheckBox chk : c)
 		{
@@ -173,9 +175,9 @@ public class Form
 					codeTxt += c.get(i).getId();
 				}
 				
-				if(!codes.contains(codeTxt))
+				if(codes.contains(codeTxt))
 				{
-					//System.err.println("please select more intersection options to view a preview "+"code: "+codeTxt);
+					
 				}
 			});
 		}

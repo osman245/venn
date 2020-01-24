@@ -63,20 +63,18 @@ public class Main extends Application {
 		primaryStage.show();
 		
 		//EVENTS
-			new_Venn.setOnAction(e -> New_Venn(primaryStage));
-			C_text.setOnAction(e -> c_Text(primaryStage));
-			C_color.setOnAction(e -> c_Color(primaryStage));
-			
-				
+		new_Venn.setOnAction(e -> New_Venn(primaryStage));
+		C_text.setOnAction(e -> c_Text(primaryStage));
+		C_color.setOnAction(e -> c_Color(primaryStage));
 		}
 	private void New_Venn(Stage secondaryStage) {
 		
-		Pane root1 = new Pane();
+		Pane root = new Pane();
 		Button b = new Button("press");
 		b.setLayoutY(100);
 		b.setLayoutX(100);
-		root1.getChildren().add(b);
-		Scene scene = new Scene(root1,800,800);
+		root.getChildren().add(b);
+		Scene scene = new Scene(root,800,800);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		secondaryStage.setTitle("New Venn Diagram");
 		secondaryStage.setScene(scene);
@@ -84,28 +82,39 @@ public class Main extends Application {
 	}
 	
 	private void c_Color(Stage secondaryStage) {
-		Pane root1 = new Pane();
+		Pane root = new Pane();
 		//PINK
 		Button PINK = new Button("PINK");
 		PINK.setLayoutY(100);
 		PINK.setLayoutX(100);
-		root1.getChildren().add(PINK);
+		root.getChildren().add(PINK);
 		//RED
 		Button RED = new Button("RED");
 		RED.setLayoutY(100);
-		RED.setLayoutX(100);
-		root1.getChildren().add(RED);
+		RED.setLayoutX(300);
+		root.getChildren().add(RED);
 		//SCENE
-		Scene scene = new Scene(root1,800,800);
+		Scene scene = new Scene(root,800,800);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		secondaryStage.setTitle("New Venn Diagram");
 		secondaryStage.setScene(scene);
 		secondaryStage.show();
 		//EVENTS
+		PINK.setOnAction(e -> C_Pink(secondaryStage,scene));
+		RED.setOnAction(e -> C_Red(secondaryStage,scene));
 	}
 	private void c_Text(Stage secondaryStage) {
-		
+		secondaryStage.setTitle("new");
 	}
+	
+	private void C_Pink(Stage secondaryStage,Scene s) {
+		s.setFill(Color.PINK);
+	}
+	private void C_Red(Stage secondaryStage,Scene s) {
+		s.setFill(Color.RED);
+			}
+	
+	
 	public static void main(String[] args) {
 		launch(args);
 	}

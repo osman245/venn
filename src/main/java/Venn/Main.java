@@ -177,10 +177,8 @@ public class Main extends Application {
 		
 	}
 	private void C_Red(Stage primaryStage,Scene s) {
-		//ROOT
-		Pane root = new Pane();
-		StackPane holder = new StackPane();
-        Canvas canvas = new Canvas(400,  300);
+		Pane root = new Pane(); 
+		
 		//CIRCLE1
 		Circle cir1 = new Circle(300,400,100);
 		cir1.setFill(Color.TRANSPARENT);
@@ -197,32 +195,42 @@ public class Main extends Application {
 		new_Venn.setLayoutX(100);
 		new_Venn.setLayoutY(100);
 		
-		//CHANGETEXT
+		//CHANGE TEXT
 		Button C_text = new Button("Change Text");
 		C_text.setLayoutX(100);
 		C_text.setLayoutY(700);
 		
-		//CHANGECOLOR
-		Button C_color = new Button("Change Background Color");
-		C_color.setLayoutX(300);
-		C_color.setLayoutY(700);
+		//CHANGE BACKGROUND COLOR
+		Button C_bcolor = new Button("Change Background Color");
+		C_bcolor.setLayoutX(300);
+		C_bcolor.setLayoutY(700);
+		
+		//CHANGE Venn COLOR
+		Button C_vcolor = new Button("Change Venn Color");
+		C_vcolor.setLayoutX(500);
+		C_vcolor.setLayoutY(700);
 		
     	//SCENE
     	root.getChildren().add(cir1);
     	root.getChildren().add(cir2);
     	root.getChildren().add(new_Venn);
     	root.getChildren().add(C_text);
-    	root.getChildren().add(C_color);
+    	root.getChildren().add(C_bcolor);
+    	root.getChildren().add(C_vcolor);
 		Scene scene = new Scene(root,800,800);
-		scene.setFill(Color.PINK);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setTitle("Venn Diagram");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		root.setStyle("-fx-background-color: pink");
-        root.getChildren().add(canvas);
-        root.getChildren().add(holder);
+		//EVENTS
+		new_Venn.setOnAction(e -> New_Venn(primaryStage));
+		C_text.setOnAction(e -> c_Text(primaryStage));
+		C_bcolor.setOnAction(e -> c_bColor(primaryStage));
+		C_vcolor.setOnAction(e -> c_vColor(primaryStage));
+				
+		root.setStyle("-fx-background-color: red");
+		        
 			}
 	
 	

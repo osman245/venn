@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+<<<<<<< HEAD
 
 public class Main extends Application {
 	@Override
@@ -48,5 +49,23 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+=======
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+	@Override
+	public void start(Stage primaryStage) throws Exception
+	{
+		Venn v = new Venn();
+	}
+	
+	public static void main(String[] args)
+	{
+		launch(args);
+	}
+
+>>>>>>> Parssa
 }
 

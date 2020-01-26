@@ -11,9 +11,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,6 +32,8 @@ public class Form
 	private VBox test = new VBox(20);
 	private  List<String> codes;
 	private String codeTxt;
+	private ImageView i;
+	private Label preview;
 
 	public Form()
 	{
@@ -41,6 +46,7 @@ public class Form
 
 		Stage s = new Stage();
 		s.setTitle("Venn Builder Form");
+		s.setResizable(false);
 
 		s.setOnCloseRequest(e->{
 
@@ -69,22 +75,29 @@ public class Form
 
 
 		root = new GridPane();
+		root.setPrefSize(500, 600);
 		root.setPadding(new Insets(15,15,15,15));
 		root.setAlignment(Pos.TOP_CENTER);
 		root.setHgap(20);
 		root.setVgap(20);
+
 
 		// adding components 
 
 		//label + combo box for n circles of choice
 		Label lblRegions = new Label("Number of Regions");
 		lblRegions.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px; -fx-font-weight:bold;");
-		
+
 
 		ComboBox<String> cboRegions = new ComboBox<String>();
 		cboRegions.setPromptText("select a value");
 		cboRegions.getItems().addAll("2","3");
 		cboRegions.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
+		
+		HBox topRow = new HBox(30);
+		topRow.getChildren().addAll(lblRegions, cboRegions);
+		topRow.setPrefWidth(root.getPrefWidth());
+	
 
 		//add later
 		/*
@@ -108,6 +121,7 @@ public class Form
 		codes.add("111");
 		codes.add("110");
 		codes.add("101");
+		codes.add("011");
 		//filling the sets with the needed check boxes and labels
 		cboRegions.setOnAction(e->{
 			if (cboRegions.getValue() != null)
@@ -115,13 +129,26 @@ public class Form
 		});
 
 
-		root.add(lblRegions,0,0);
-		root.add(cboRegions, 1, 0);
-		root.add(setRelations, 0, 1);
+		i = new ImageView(new Image("/venn_pics/venn111.png"));
+		i.setVisible(false);
+
+		HBox previewPic = new HBox(root.getPrefWidth());
+		previewPic.getChildren().add(i);
+		previewPic.setAlignment(Pos.CENTER);
+		
+		preview = new Label("Preview:");
+		preview.setStyle("-fx-fill:#8f7a66; -fx-font-size: 18px; -fx-font-weight:bold;");
+		preview.setVisible(false);
+		
+	
+		root.addRow(0, topRow);
+		root.addRow(1,setRelations);
+		root.addRow(2,preview);
+		root.addRow(3,previewPic);
 		//root.add(lblShapes,0,1);
 		//root.add(cboShapes, 1, 1);
 
-		Scene scene = new Scene(root,400,400);
+		Scene scene = new Scene(root);
 		root.setStyle("-fx-background-color:#faf8ef;");
 
 		s.setScene(scene);
@@ -133,7 +160,7 @@ public class Form
 
 	private void fillCheckArray(String value, List<CheckBox> c)
 	{
-		
+
 		if(test.getChildren().size() >0) {
 			test.getChildren().removeAll(c);
 			c.clear();
@@ -149,14 +176,16 @@ public class Form
 			c.add(new CheckBox("S1 intersect S3"));
 			c.add(new CheckBox("S2 intersect S3"));
 			break;
-		
+
 		default:
 			break;
 
 		}
 
-		Label lblPreview = new Label("Preview");
-		
+
+		this.i.setVisible(false);
+		this.preview.setVisible(false);
+
 		//selections = new ArrayList<Boolean>();
 		for( CheckBox chk : c)
 		{
@@ -168,28 +197,36 @@ public class Form
 					chk.setId("1");
 				else
 					chk.setId("0");
-				
+
 				codeTxt ="";
 				for(int i=0; i< c.size(); i++)
 				{
 					codeTxt += c.get(i).getId();
 				}
-				
-				if(codes.contains(codeTxt))
+
+				if(codes.contains(codeTxt) && codeTxt.length() == c.size())
 				{
-					
+					this.i.setVisible(true);
+					this.preview.setVisible(true);
+					this.i.setImage(new Image("/venn_pics/venn"+codeTxt+".png"));
+					System.out.println(codeTxt);
+				}
+				else
+				{
+					this.i.setVisible(false);
+					this.preview.setVisible(false);
 				}
 			});
 		}
 
-		
-		
-		
+
+
+
 		if(!root.getChildren().contains(test))
-		root.add(test, 0, 1);
+			root.add(test, 0, 1);
 	}
 
-	
+
 	public void setButton(Button b)
 	{
 		this.b = b;

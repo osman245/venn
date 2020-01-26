@@ -126,6 +126,7 @@ public class Form
 		cboRegions.setOnAction(e->{
 			if (cboRegions.getValue() != null)
 				fillCheckArray(cboRegions.getValue(), chkBoxes);
+			preview.setVisible(true);
 		});
 
 
@@ -184,7 +185,7 @@ public class Form
 
 
 		this.i.setVisible(false);
-		this.preview.setVisible(false);
+	//	this.preview.setVisible(false);
 
 		//selections = new ArrayList<Boolean>();
 		for( CheckBox chk : c)
@@ -207,14 +208,14 @@ public class Form
 				if(codes.contains(codeTxt) && codeTxt.length() == c.size())
 				{
 					this.i.setVisible(true);
-					this.preview.setVisible(true);
+					//this.preview.setVisible(true);
 					this.i.setImage(new Image("/venn_pics/venn"+codeTxt+".png"));
 					System.out.println(codeTxt);
 				}
 				else
 				{
 					this.i.setVisible(false);
-					this.preview.setVisible(false);
+					//this.preview.setVisible(false);
 				}
 			});
 		}

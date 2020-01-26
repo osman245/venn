@@ -33,13 +33,7 @@ public class Main extends Application {
     	//add circles to the border layout
     	root.getChildren().add(cir1);
     	root.getChildren().add(cir2);
-    	
-    	  
-
-            
-					
-			
-			
+    			
 		Scene scene = new Scene(root,800,800);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setTitle("Venn Project");

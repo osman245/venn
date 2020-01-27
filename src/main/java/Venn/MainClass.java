@@ -20,7 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 
-public class Main extends Application {
+public class MainClass extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		Pane root = new Pane(); 
@@ -47,7 +47,7 @@ public class Main extends Application {
 		C_text.setLayoutX(100);
 		C_text.setLayoutY(700);
 		
-		//CHANGE BACKGROUND COLOR
+		//CHANGE BACKGOUND COLOR
 		Button C_bcolor = new Button("Change Background Color");
 		C_bcolor.setLayoutX(300);
 		C_bcolor.setLayoutY(700);

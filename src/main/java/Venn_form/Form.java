@@ -43,7 +43,6 @@ public class Form
 
 	private void startStage() {
 
-
 		Stage s = new Stage();
 		s.setTitle("Venn Builder Form");
 		s.setResizable(false);

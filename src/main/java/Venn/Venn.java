@@ -29,7 +29,6 @@ public class Venn
 		root.setPadding(new Insets(15,15,15,15));
 		root.setAlignment(Pos.CENTER);
 		
-		
 		Scene scene = new Scene(root,800,800);
 		root.setStyle("-fx-background-color:#faf8ef;");
 	

@@ -11,31 +11,38 @@ import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Venn 
+public class Venn extends Stage
 {
+
+	private Button init;
+	private String code;
+	private GridPane root;
+
 	public Venn()
 	{
 		startStage();
-		
+
 	}
 
 	private void startStage() {
 		// making a basic gui
-		Stage s = new Stage();
-		GridPane root = new GridPane();
+
+		this.setMaximized(true);
+		this.setResizable(false);
+		root = new GridPane();
 		root.setPadding(new Insets(15,15,15,15));
 		root.setAlignment(Pos.CENTER);
-		
-		
-		Scene scene = new Scene(root,800,800);
+
+
+		Scene scene = new Scene(root);
 		root.setStyle("-fx-background-color:#faf8ef;");
-	
+
 		//graphic text for the button
 		Text txtInit = new Text("Create a new Venn Diagram");
 		txtInit.setFontSmoothingType(FontSmoothingType.GRAY);
 		txtInit.setStyle("-fx-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;");
-		
-		Button init = new Button();
+
+		init = new Button();
 		init.setGraphic(txtInit);
 		init.setStyle("-fx-background-color: #8f7a66;");
 		init.setPrefSize(200, 75);
@@ -45,23 +52,26 @@ public class Venn
 			f.setButton(init);
 			init.setDisable(true);
 		});
-		
-	
+
+
 		VBox panel = new VBox(20);
 		panel.setAlignment(Pos.CENTER);
 		panel.getChildren().add(init);
 		panel.setLayoutX(scene.getWidth()/2-init.getPrefWidth()/2);
 		panel.setLayoutY(scene.getHeight()/2-init.getPrefHeight()/2);	
-		
+
 		root.add(panel,0,0);
-		
-		s.setTitle("custom venn diagram maker");
-		s.getIcons().clear();
+
+		this.setTitle("custom venn diagram maker");
+		this.getIcons().clear();
 		//s.getIcons().add(new Image("/Images/VennIcon"+".png"));
-		s.setScene(scene);
-		s.show();
-	
-		
-		
+		this.setScene(scene);
+		this.show();
+
 	}
+	public void init(String code)
+	{
+		init.setVisible(false); 
+	}
+
 }

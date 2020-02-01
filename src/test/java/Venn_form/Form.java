@@ -3,6 +3,8 @@ package Venn_form;
 import java.util.ArrayList;
 import java.util.List;
 
+import Venn.Main;
+import Venn.Venn;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -147,7 +149,11 @@ public class Form
 		btnDone.setVisible(false);
 		btnDone.setDisable(true);
 		btnDone.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold; -fx-background-color: #8f7a66;");
-		
+		btnDone.setOnAction(e->{
+			
+			Main.v.init(codeTxt);
+			s.close();
+		});
 		
 		HBox bottom = new HBox();
 		bottom.getChildren().add(btnDone);

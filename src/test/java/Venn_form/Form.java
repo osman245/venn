@@ -34,6 +34,7 @@ public class Form
 	private String codeTxt;
 	private ImageView i;
 	private Label preview;
+	private Button btnDone;
 
 	public Form()
 	{
@@ -75,8 +76,8 @@ public class Form
 
 
 		root = new GridPane();
-		root.setPrefSize(500, 600);
-		root.setPadding(new Insets(15,15,15,15));
+		root.setPrefSize(400, 550);
+		root.setPadding(new Insets(20,15,20,15));
 		root.setAlignment(Pos.TOP_CENTER);
 		root.setHgap(20);
 		root.setVgap(20);
@@ -141,11 +142,22 @@ public class Form
 		preview.setStyle("-fx-fill:#8f7a66; -fx-font-size: 18px; -fx-font-weight:bold;");
 		preview.setVisible(false);
 		
-	
+		//done button
+		btnDone = new Button("Done");
+		btnDone.setVisible(false);
+		btnDone.setDisable(true);
+		btnDone.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold; -fx-background-color: #8f7a66;");
+		
+		
+		HBox bottom = new HBox();
+		bottom.getChildren().add(btnDone);
+		bottom.setAlignment(Pos.BOTTOM_RIGHT);
+		
 		root.addRow(0, topRow);
 		root.addRow(1,setRelations);
 		root.addRow(2,preview);
 		root.addRow(3,previewPic);
+		root.addRow(4, bottom);
 		//root.add(lblShapes,0,1);
 		//root.add(cboShapes, 1, 1);
 
@@ -185,9 +197,9 @@ public class Form
 
 
 		this.i.setVisible(false);
-	//	this.preview.setVisible(false);
+		btnDone.setVisible(false);
+		btnDone.setDisable(true);
 
-		//selections = new ArrayList<Boolean>();
 		for( CheckBox chk : c)
 		{
 			chk.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
@@ -208,19 +220,19 @@ public class Form
 				if(codes.contains(codeTxt) && codeTxt.length() == c.size())
 				{
 					this.i.setVisible(true);
-					//this.preview.setVisible(true);
 					this.i.setImage(new Image("/venn_pics/venn"+codeTxt+".png"));
+					btnDone.setVisible(true);
+					btnDone.setDisable(false);
 					System.out.println(codeTxt);
 				}
 				else
 				{
 					this.i.setVisible(false);
-					//this.preview.setVisible(false);
+					btnDone.setVisible(false);
+					btnDone.setDisable(true);
 				}
 			});
 		}
-
-
 
 
 		if(!root.getChildren().contains(test))

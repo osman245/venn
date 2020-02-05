@@ -56,7 +56,7 @@ public class Venn
 		
 		root.add(panel,0,0);
 		
-		init.setOnAction(e ->{
+		init.setOnAction(e ->{  //when you press the button to create venn diagram
 			Form f = new Form();
 			f.setButton(init,panel);
 			 

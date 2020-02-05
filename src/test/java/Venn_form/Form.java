@@ -147,6 +147,7 @@ public class Form
 		preview.setStyle("-fx-fill:#8f7a66; -fx-font-size: 18px; -fx-font-weight:bold;");
 		preview.setVisible(false);
 		
+		//create horizontal pane for the finish button
 		HBox btnBox = new HBox(root.getPrefWidth());
 		Button btn = new Button("Finish");
 		btnBox.getChildren().add(btn);
@@ -157,8 +158,9 @@ public class Form
 		root.addRow(3,previewPic);
 	    
 		root.addRow(4, btnBox);
+		//when finish button is pressed
 		btn.setOnAction(e -> {
-			closeWindow(btn);
+			closeWindow(btn);// go to this method
 			
 			
 			
@@ -255,9 +257,9 @@ public class Form
 	}
 	
 	public void closeWindow(Button btn) {
-		Stage stage = (Stage) btn.getScene().getWindow();
+		Stage stage = (Stage) btn.getScene().getWindow(); //closes preview window
 	    stage.close();
-	   this.panel.getChildren().removeAll(b);
+	   this.panel.getChildren().removeAll(b); //removes button from pane
 	}
 
 

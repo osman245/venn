@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -34,6 +35,8 @@ public class Form
 	private String codeTxt;
 	private ImageView i;
 	private Label preview;
+	private GridPane gridpane;
+	private VBox panel;
 
 	public Form()
 	{
@@ -46,7 +49,10 @@ public class Form
 
 		Stage s = new Stage();
 		s.setTitle("Venn Builder Form");
-		s.setResizable(false);
+		s.setResizable(true);
+	  
+		
+	
 
 		s.setOnCloseRequest(e->{
 
@@ -141,11 +147,23 @@ public class Form
 		preview.setStyle("-fx-fill:#8f7a66; -fx-font-size: 18px; -fx-font-weight:bold;");
 		preview.setVisible(false);
 		
+		HBox btnBox = new HBox(root.getPrefWidth());
+		Button btn = new Button("Finish");
+		btnBox.getChildren().add(btn);
 	
 		root.addRow(0, topRow);
 		root.addRow(1,setRelations);
 		root.addRow(2,preview);
 		root.addRow(3,previewPic);
+	    
+		root.addRow(4, btnBox);
+		btn.setOnAction(e -> {
+			closeWindow(btn);
+			
+			
+			
+			
+		});
 		//root.add(lblShapes,0,1);
 		//root.add(cboShapes, 1, 1);
 
@@ -158,6 +176,8 @@ public class Form
 
 
 	}
+
+	
 
 	private void fillCheckArray(String value, List<CheckBox> c)
 	{
@@ -228,9 +248,16 @@ public class Form
 	}
 
 
-	public void setButton(Button b)
+	public void setButton(Button b, VBox panel)
 	{
 		this.b = b;
+		this.panel = panel;
+	}
+	
+	public void closeWindow(Button btn) {
+		Stage stage = (Stage) btn.getScene().getWindow();
+	    stage.close();
+	   this.panel.getChildren().removeAll(b);
 	}
 
 

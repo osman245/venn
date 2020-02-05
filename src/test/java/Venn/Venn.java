@@ -22,16 +22,17 @@ public class Venn
 		
 	}
 
-	private void startStage() {
+	public void startStage() {
 		// making a basic gui
+		
 		Stage s = new Stage();
 		GridPane root = new GridPane();
 		root.setPadding(new Insets(15,15,15,15));
 		root.setAlignment(Pos.CENTER);
 		
 		
-		Scene scene = new Scene(root,800,800);
-		root.setStyle("-fx-background-color:#faf8ef;");
+		Scene scene = new Scene(root,1200,600);
+		root.setStyle("-fx-background-color:#ffffff;");
 	
 		//graphic text for the button
 		Text txtInit = new Text("Create a new Venn Diagram");
@@ -43,11 +44,8 @@ public class Venn
 		init.setStyle("-fx-background-color: #8f7a66;");
 		init.setPrefSize(200, 75);
 		init.setAlignment(Pos.CENTER);
-		init.setOnAction(e ->{
-			Form f = new Form();
-			f.setButton(init);
-			init.setDisable(true);
-		});
+		
+		
 		
 	
 		VBox panel = new VBox(20);
@@ -58,13 +56,19 @@ public class Venn
 		
 		root.add(panel,0,0);
 		
+		init.setOnAction(e ->{
+			Form f = new Form();
+			f.setButton(init,panel);
+			 
+			
+		});
 		s.setTitle("custom venn diagram maker");
 		s.getIcons().clear();
 		//s.getIcons().add(new Image("/Images/VennIcon"+".png"));
 		s.setScene(scene);
 		s.show();
+	   
+		
 	
-		
-		
 	}
 }

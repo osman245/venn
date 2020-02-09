@@ -16,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -90,9 +91,8 @@ public class Venn extends Stage
 	}
 	public void init(String code)
 	{
-		init.setVisible(false); 
-
-
+		//init.setVisible(false);
+		root.getChildren().clear();
 		
 		Button add = new Button("add a text box");
 		add.setPrefSize(200, 40);
@@ -102,8 +102,137 @@ public class Venn extends Stage
 		
 		add.setOnAction(e->addTextBox());
 		
-			
 		root.getChildren().add(add);
+		
+		//check the code and add the correct amount of circles accordingly 
+		/*
+		 * code 1 -> basic 2 intersection
+		 * code 111 ->  3 way intersection
+		 * code 110, 011, 101,  -> 3 2 intersections 3 circles 
+		 * 
+		 * circle hex codes defaults 
+		 * circle 1: #ffbf00
+		 * circle 2: #5b9ad5
+		 * circle 3: #30e845
+		 * 
+		 */
+		
+		if(code.equals("1"))
+		{
+			Circle c1 = new Circle(maxW/4.5);
+			c1.setStyle("-fx-fill: #ffbf00");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/4+10);
+			c1.setLayoutY(maxH/2);
+			
+			Circle c2 = new Circle(maxW/4.5);
+			c2.setStyle("-fx-fill: #5b9ad5");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2);
+			c2.setLayoutY(maxH/2);
+						
+			
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+		}
+		else if ( code.equals("011"))
+		{
+			Circle c1 = new Circle(maxW/5.5);
+			c1.setStyle("-fx-fill: #5b9ad5");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/5.5+20);
+			c1.setLayoutY(maxH/2);
+						
+			Circle c2 = new Circle(maxW/5.5);
+			c2.setStyle("-fx-fill: #30e845");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2 - maxW/14);
+			c2.setLayoutY(maxH/2);
+			
+			Circle c3 = new Circle(maxW/5.5);
+			c3.setStyle("-fx-fill: #5b9ad5");
+			c3.setOpacity(0.5);
+			c3.setLayoutX(maxW/2 + maxW/6);
+			c3.setLayoutY(maxH/2);		
+			
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+			root.getChildren().add(c3);
+		}
+		else if ( code.equals("110"))
+		{
+			Circle c1 = new Circle(maxW/5.5);
+			c1.setStyle("-fx-fill: #30e845");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/5.5+20);
+			c1.setLayoutY(maxH/2);
+						
+			Circle c2 = new Circle(maxW/5.5);
+			c2.setStyle("-fx-fill: #5b9ad5");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2 - maxW/14);
+			c2.setLayoutY(maxH/2);
+			
+			Circle c3 = new Circle(maxW/5.5);
+			c3.setStyle("-fx-fill: #ffbf00");
+			c3.setOpacity(0.5);
+			c3.setLayoutX(maxW/2 + maxW/6);
+			c3.setLayoutY(maxH/2);		
+			
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+			root.getChildren().add(c3);
+		}
+		else if ( code.equals("101"))
+		{
+			Circle c1 = new Circle(maxW/5.5);
+			c1.setStyle("-fx-fill: #ffbf00");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/5.5+20);
+			c1.setLayoutY(maxH/2);
+						
+			Circle c2 = new Circle(maxW/5.5);
+			c2.setStyle("-fx-fill: #5b9ad5");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2 - maxW/14);
+			c2.setLayoutY(maxH/2);
+			
+			Circle c3 = new Circle(maxW/5.5);
+			c3.setStyle("-fx-fill: #30e845");
+			c3.setOpacity(0.5);
+			c3.setLayoutX(maxW/2 + maxW/6);
+			c3.setLayoutY(maxH/2);		
+			
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+			root.getChildren().add(c3);
+		}
+		else if ( code.equals("111"))
+		{	
+						
+			Circle c1 = new Circle(maxW/6);
+			c1.setStyle("-fx-fill: #5b9ad5");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/4+20);
+			c1.setLayoutY(maxH/1.5);
+						
+			Circle c2 = new Circle(maxW/6);
+			c2.setStyle("-fx-fill: #30e845");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2);
+			c2.setLayoutY(maxH/1.5);
+			
+			Circle c3 = new Circle(maxW/6);
+			c3.setStyle("-fx-fill: #ffbf00");
+			c3.setOpacity(0.5);
+			c3.setLayoutX(maxW/2 - maxW/8.75);
+			c3.setLayoutY(maxH/3);
+					
+			
+			root.getChildren().add(c3);
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+		}
 		
 		
 	}
@@ -118,6 +247,7 @@ public class Venn extends Stage
 		txtCount++;
 		//figure out limit later
 		
+		//add window limits so you cant drag off screen
 		b.setOnMouseDragged(e->{
 			b.setLayoutX(b.getLayoutX()+e.getX()-b.getWidth()/2);
 			b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);

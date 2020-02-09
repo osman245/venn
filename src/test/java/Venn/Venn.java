@@ -52,7 +52,7 @@ public class Venn extends Stage
 		maxH = bounds.getMaxY();
 		maxW = bounds.getMaxX();
 
-	//	System.out.println(maxW);
+		//	System.out.println(maxW);
 
 		Scene scene = new Scene(root);
 		root.setStyle("-fx-background-color:#faf8ef;");
@@ -93,17 +93,17 @@ public class Venn extends Stage
 	{
 		//init.setVisible(false);
 		root.getChildren().clear();
-		
+
 		Button add = new Button("add a text box");
 		add.setPrefSize(200, 40);
 		add.setLayoutX(maxW-add.getPrefWidth()-15);
 		add.setLayoutY(maxH-add.getPrefHeight());
 		add.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
-		
+
 		add.setOnAction(e->addTextBox());
-		
+
 		root.getChildren().add(add);
-		
+
 		//check the code and add the correct amount of circles accordingly 
 		/*
 		 * code 1 -> basic 2 intersection
@@ -116,7 +116,7 @@ public class Venn extends Stage
 		 * circle 3: #30e845
 		 * 
 		 */
-		
+
 		if(code.equals("1"))
 		{
 			Circle c1 = new Circle(maxW/4.5);
@@ -124,14 +124,14 @@ public class Venn extends Stage
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/4+10);
 			c1.setLayoutY(maxH/2);
-			
+
 			Circle c2 = new Circle(maxW/4.5);
 			c2.setStyle("-fx-fill: #5b9ad5");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2);
 			c2.setLayoutY(maxH/2);
-						
-			
+
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 		}
@@ -142,19 +142,19 @@ public class Venn extends Stage
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
-						
+
 			Circle c2 = new Circle(maxW/5.5);
 			c2.setStyle("-fx-fill: #30e845");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2 - maxW/14);
 			c2.setLayoutY(maxH/2);
-			
+
 			Circle c3 = new Circle(maxW/5.5);
 			c3.setStyle("-fx-fill: #5b9ad5");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 + maxW/6);
 			c3.setLayoutY(maxH/2);		
-			
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
@@ -166,19 +166,19 @@ public class Venn extends Stage
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
-						
+
 			Circle c2 = new Circle(maxW/5.5);
 			c2.setStyle("-fx-fill: #5b9ad5");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2 - maxW/14);
 			c2.setLayoutY(maxH/2);
-			
+
 			Circle c3 = new Circle(maxW/5.5);
 			c3.setStyle("-fx-fill: #ffbf00");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 + maxW/6);
 			c3.setLayoutY(maxH/2);		
-			
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
@@ -190,51 +190,51 @@ public class Venn extends Stage
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
-						
+
 			Circle c2 = new Circle(maxW/5.5);
 			c2.setStyle("-fx-fill: #5b9ad5");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2 - maxW/14);
 			c2.setLayoutY(maxH/2);
-			
+
 			Circle c3 = new Circle(maxW/5.5);
 			c3.setStyle("-fx-fill: #30e845");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 + maxW/6);
 			c3.setLayoutY(maxH/2);		
-			
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
 		}
 		else if ( code.equals("111"))
 		{	
-						
+
 			Circle c1 = new Circle(maxW/6);
 			c1.setStyle("-fx-fill: #5b9ad5");
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/4+20);
 			c1.setLayoutY(maxH/1.5);
-						
+
 			Circle c2 = new Circle(maxW/6);
 			c2.setStyle("-fx-fill: #30e845");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2);
 			c2.setLayoutY(maxH/1.5);
-			
+
 			Circle c3 = new Circle(maxW/6);
 			c3.setStyle("-fx-fill: #ffbf00");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 - maxW/8.75);
 			c3.setLayoutY(maxH/3);
-					
-			
+
+
 			root.getChildren().add(c3);
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 		}
-		
-		
+
+
 	}
 
 	private void addTextBox()
@@ -243,17 +243,20 @@ public class Venn extends Stage
 		b.setPrefSize(150, 40);
 		b.setLayoutX(maxW-b.getPrefWidth());
 		b.setLayoutY(b.getPrefHeight()*txtCount);
-		
+
 		txtCount++;
 		//figure out limit later
-		
+
 		//add window limits so you cant drag off screen
 		b.setOnMouseDragged(e->{
-			b.setLayoutX(b.getLayoutX()+e.getX()-b.getWidth()/2);
-			b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);
+			if( e.getButton().equals(MouseButton.PRIMARY))
+			{
+				b.setLayoutX(b.getLayoutX()+e.getX()-b.getWidth()/2);
+				b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);
+			}
 		});
-		
-		
+
+
 		//going to add right click to access options
 		b.setOnMouseClicked(e->{
 			if( e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2)
@@ -265,8 +268,16 @@ public class Venn extends Stage
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent())
 				{
-				b.setText(result.get());
+					b.setText(result.get());
 				}
+			}
+			else if(e.getButton().equals(MouseButton.SECONDARY))
+			{
+				//for now delete
+				//in the future add an options panel
+				//text colours, background color, size
+				root.getChildren().remove(b);
+				
 			}
 		});
 		root.getChildren().add(b);

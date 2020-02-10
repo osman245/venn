@@ -9,6 +9,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -43,6 +45,33 @@ public class Venn extends Stage
 
 		this.setMaximized(true);
 		this.setResizable(false);
+		
+
+		this.setOnCloseRequest(e->{
+
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText(null);
+			alert.setContentText("Are you sure you want to exit?");
+			alert.setTitle("Exit Form");
+			alert.initModality(Modality.NONE);
+			alert.getButtonTypes().clear();
+			alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
+			alert.showAndWait().ifPresent(response ->{
+				if(response == ButtonType.YES)
+				{
+					e.consume();
+					this.close();
+				}
+				else
+				{
+					e.consume();
+				}
+			});;
+
+
+		});
+		
+		
 		root = new Pane();
 		root.setPadding(new Insets(15,15,15,15));
 

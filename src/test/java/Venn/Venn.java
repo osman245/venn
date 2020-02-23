@@ -143,6 +143,7 @@ public class Venn extends Stage
 		ta.setLayoutX(maxW-ta.getPrefWidth()-15);
 		ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20);
 		ta.setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
+		ta.setWrapText(true);
 
 		add.setOnAction(e->addTextBox(ta));
 
@@ -179,55 +180,7 @@ public class Venn extends Stage
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 		}
-		else if ( code.equals("011"))
-		{
-			Circle c1 = new Circle(maxW/7);
-			c1.setStyle("-fx-fill: #5b9ad5");
-			c1.setOpacity(0.5);
-			c1.setLayoutX(maxW/5.5+20);
-			c1.setLayoutY(maxH/2);
-
-			Circle c2 = new Circle(maxW/7);
-			c2.setStyle("-fx-fill: #30e845");
-			c2.setOpacity(0.5);
-			c2.setLayoutX(maxW/2 - maxW/14);
-			c2.setLayoutY(maxH/2);
-
-			Circle c3 = new Circle(maxW/7);
-			c3.setStyle("-fx-fill: #5b9ad5");
-			c3.setOpacity(0.5);
-			c3.setLayoutX(maxW/2 + maxW/6);
-			c3.setLayoutY(maxH/2);		
-
-			root.getChildren().add(c1);
-			root.getChildren().add(c2);
-			root.getChildren().add(c3);
-		}
-		else if ( code.equals("110"))
-		{
-			Circle c1 = new Circle(maxW/7);
-			c1.setStyle("-fx-fill: #30e845");
-			c1.setOpacity(0.5);
-			c1.setLayoutX(maxW/5.5+20);
-			c1.setLayoutY(maxH/2);
-
-			Circle c2 = new Circle(maxW/7);
-			c2.setStyle("-fx-fill: #5b9ad5");
-			c2.setOpacity(0.5);
-			c2.setLayoutX(maxW/2 - maxW/14);
-			c2.setLayoutY(maxH/2);
-
-			Circle c3 = new Circle(maxW/7);
-			c3.setStyle("-fx-fill: #ffbf00");
-			c3.setOpacity(0.5);
-			c3.setLayoutX(maxW/2 + maxW/6);
-			c3.setLayoutY(maxH/2);		
-
-			root.getChildren().add(c1);
-			root.getChildren().add(c2);
-			root.getChildren().add(c3);
-		}
-		else if ( code.equals("101"))
+		else if (code.equals("011"))
 		{
 			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #ffbf00");
@@ -236,41 +189,93 @@ public class Venn extends Stage
 			c1.setLayoutY(maxH/2);
 
 			Circle c2 = new Circle(maxW/7);
-			c2.setStyle("-fx-fill: #5b9ad5");
+			c2.setStyle("-fx-fill: #30e845");
 			c2.setOpacity(0.5);
-			c2.setLayoutX(maxW/2 - maxW/14);
+			c2.setLayoutX(maxW/2.75);
 			c2.setLayoutY(maxH/2);
 
 			Circle c3 = new Circle(maxW/7);
-			c3.setStyle("-fx-fill: #30e845");
+			c3.setStyle("-fx-fill: #5b9ad5");
 			c3.setOpacity(0.5);
-			c3.setLayoutX(maxW/2 + maxW/6);
+			c3.setLayoutX(maxW/1.85);
 			c3.setLayoutY(maxH/2);		
 
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
 		}
-		else if ( code.equals("111"))
+		else if (code.equals("110"))
+		{
+			Circle c1 = new Circle(maxW/7);
+			c1.setStyle("-fx-fill: #30e845");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/5.5+20);
+			c1.setLayoutY(maxH/2);
+
+			Circle c2 = new Circle(maxW/7);
+			c2.setStyle("-fx-fill: #ffbf00");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2.75);
+			c2.setLayoutY(maxH/2);
+
+			Circle c3 = new Circle(maxW/7);
+			c3.setStyle("-fx-fill: #5b9ad5");
+			c3.setOpacity(0.5);
+			c3.setLayoutX(maxW/1.85);
+			c3.setLayoutY(maxH/2);	
+
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+			root.getChildren().add(c3);
+		}
+		else if (code.equals("101"))
+		{
+			Circle c1 = new Circle(maxW/7);
+			c1.setStyle("-fx-fill: #ffbf00");
+			c1.setOpacity(0.5);
+			c1.setLayoutX(maxW/5.5+20);
+			c1.setLayoutY(maxH/2);
+
+			//middle
+			Circle c2 = new Circle(maxW/7);
+			c2.setStyle("-fx-fill: #5b9ad5");
+			c2.setOpacity(0.5);
+			c2.setLayoutX(maxW/2.75);
+			c2.setLayoutY(maxH/2);
+
+			Circle c3 = new Circle(maxW/7);
+			c3.setStyle("-fx-fill: #30e845");
+			c3.setOpacity(0.5);
+			c3.setLayoutX(maxW/1.85);
+			c3.setLayoutY(maxH/2);		
+
+			root.getChildren().add(c1);
+			root.getChildren().add(c2);
+			root.getChildren().add(c3);
+		}
+		else if (code.equals("111"))
 		{	
 
+			//bottom left
 			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #5b9ad5");
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/4+20);
 			c1.setLayoutY(maxH/1.5);
 
+			//bottom right
 			Circle c2 = new Circle(maxW/7);
 			c2.setStyle("-fx-fill: #30e845");
 			c2.setOpacity(0.5);
-			c2.setLayoutX(maxW/2);
+			c2.setLayoutX(maxW/2.5);
 			c2.setLayoutY(maxH/1.5);
 
+			//top
 			Circle c3 = new Circle(maxW/7);
 			c3.setStyle("-fx-fill: #ffbf00");
 			c3.setOpacity(0.5);
-			c3.setLayoutX(maxW/2 - maxW/8.75);
-			c3.setLayoutY(maxH/3);
+			c3.setLayoutX(maxW/3.225);
+			c3.setLayoutY(maxH/2.75);
 
 			root.getChildren().add(c3);
 			root.getChildren().add(c1);
@@ -285,7 +290,6 @@ public class Venn extends Stage
 	{
 
 		String[] inputs = t.getText().split("\n");
-		
 		int c=0;
 		
 		for(int i=0; i< inputs.length; i++)
@@ -294,13 +298,21 @@ public class Venn extends Stage
 			if(!inputs[i].isEmpty() && inputs[i].trim().length()>0)
 			{
 				Button b = new Button();
-				b.setPrefSize(150, 30);
-				b.setLayoutX(maxW-b.getPrefWidth());
-				b.setLayoutY(b.getPrefHeight()*c);
-				b.setAlignment(Pos.CENTER);
+				Label l = new Label();
+				
+				l.setPrefSize(150, 60);
+				l.setWrapText(true);
+				l.setAlignment(Pos.CENTER);
+				l.setText(inputs[i]);
+				l.setStyle("-fx-background-color:transparent;-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: "
+						+ "18px; -fx-font-weight:bold; ");
 				b.setStyle("-fx-background-color:transparent;-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: "
 						+ "18px; -fx-font-weight:bold; ");
-				b.setText(inputs[i]);
+								b.setGraphic(l);
+				
+				b.setLayoutX(maxW-l.getPrefWidth()-20);
+				b.setLayoutY(l.getPrefHeight()*c);
+				b.setAlignment(Pos.CENTER);		
 				
 				c++;
 				b.setOnMouseDragged(e->{
@@ -322,7 +334,7 @@ public class Venn extends Stage
 						Optional<String> result = dialog.showAndWait();
 						if (result.isPresent())
 						{
-							b.setText(result.get());
+							l.setText(result.get());
 						}
 					}
 					else if(e.getButton().equals(MouseButton.SECONDARY))
@@ -338,6 +350,9 @@ public class Venn extends Stage
 
 			}
 		}
+		
+		//clear the text area
+		t.clear();
 
 		//add window limits so you cant drag off screen
 		//going to add right click to access options

@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
 import javafx.scene.control.Alert.AlertType;
@@ -32,6 +35,7 @@ public class Venn extends Stage
 	private Pane root;
 	private double maxH, maxW;
 	private int txtCount =0;
+	private Scene scene;
 
 
 	public Venn()
@@ -45,7 +49,7 @@ public class Venn extends Stage
 
 		this.setMaximized(true);
 		this.setResizable(false);
-		
+
 
 		this.setOnCloseRequest(e->{
 
@@ -70,8 +74,8 @@ public class Venn extends Stage
 
 
 		});
-		
-		
+
+
 		root = new Pane();
 		root.setPadding(new Insets(15,15,15,15));
 
@@ -83,7 +87,7 @@ public class Venn extends Stage
 
 		//	System.out.println(maxW);
 
-		Scene scene = new Scene(root);
+		scene = new Scene(root);
 		root.setStyle("-fx-background-color:#faf8ef;");
 
 		//graphic text for the button
@@ -118,20 +122,32 @@ public class Venn extends Stage
 		this.show();
 
 	}
+	//this method is called after the user selects the options from the form 
+	/*
+	 * the circles are added and other interface features
+	 */
 	public void init(String code)
 	{
 		//init.setVisible(false);
 		root.getChildren().clear();
 
-		Button add = new Button("add a text box");
+		//clicking this will parse a ttext area and every new line will create a new text field
+		Button add = new Button("add text boxes");
 		add.setPrefSize(200, 40);
 		add.setLayoutX(maxW-add.getPrefWidth()-15);
 		add.setLayoutY(maxH-add.getPrefHeight());
 		add.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
 
-		add.setOnAction(e->addTextBox());
+		TextArea ta = new TextArea();
+		ta.setPrefSize(200, maxH/2);
+		ta.setLayoutX(maxW-ta.getPrefWidth()-15);
+		ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20);
+		ta.setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
+
+		add.setOnAction(e->addTextBox(ta));
 
 		root.getChildren().add(add);
+		root.getChildren().add(ta);
 
 		//check the code and add the correct amount of circles accordingly 
 		/*
@@ -160,25 +176,24 @@ public class Venn extends Stage
 			c2.setLayoutX(maxW/2);
 			c2.setLayoutY(maxH/2);
 
-
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 		}
 		else if ( code.equals("011"))
 		{
-			Circle c1 = new Circle(maxW/5.5);
+			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #5b9ad5");
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
 
-			Circle c2 = new Circle(maxW/5.5);
+			Circle c2 = new Circle(maxW/7);
 			c2.setStyle("-fx-fill: #30e845");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2 - maxW/14);
 			c2.setLayoutY(maxH/2);
 
-			Circle c3 = new Circle(maxW/5.5);
+			Circle c3 = new Circle(maxW/7);
 			c3.setStyle("-fx-fill: #5b9ad5");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 + maxW/6);
@@ -190,19 +205,19 @@ public class Venn extends Stage
 		}
 		else if ( code.equals("110"))
 		{
-			Circle c1 = new Circle(maxW/5.5);
+			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #30e845");
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
 
-			Circle c2 = new Circle(maxW/5.5);
+			Circle c2 = new Circle(maxW/7);
 			c2.setStyle("-fx-fill: #5b9ad5");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2 - maxW/14);
 			c2.setLayoutY(maxH/2);
 
-			Circle c3 = new Circle(maxW/5.5);
+			Circle c3 = new Circle(maxW/7);
 			c3.setStyle("-fx-fill: #ffbf00");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 + maxW/6);
@@ -214,19 +229,19 @@ public class Venn extends Stage
 		}
 		else if ( code.equals("101"))
 		{
-			Circle c1 = new Circle(maxW/5.5);
+			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #ffbf00");
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
 
-			Circle c2 = new Circle(maxW/5.5);
+			Circle c2 = new Circle(maxW/7);
 			c2.setStyle("-fx-fill: #5b9ad5");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2 - maxW/14);
 			c2.setLayoutY(maxH/2);
 
-			Circle c3 = new Circle(maxW/5.5);
+			Circle c3 = new Circle(maxW/7);
 			c3.setStyle("-fx-fill: #30e845");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 + maxW/6);
@@ -239,77 +254,94 @@ public class Venn extends Stage
 		else if ( code.equals("111"))
 		{	
 
-			Circle c1 = new Circle(maxW/6);
+			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #5b9ad5");
 			c1.setOpacity(0.5);
 			c1.setLayoutX(maxW/4+20);
 			c1.setLayoutY(maxH/1.5);
 
-			Circle c2 = new Circle(maxW/6);
+			Circle c2 = new Circle(maxW/7);
 			c2.setStyle("-fx-fill: #30e845");
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2);
 			c2.setLayoutY(maxH/1.5);
 
-			Circle c3 = new Circle(maxW/6);
+			Circle c3 = new Circle(maxW/7);
 			c3.setStyle("-fx-fill: #ffbf00");
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/2 - maxW/8.75);
 			c3.setLayoutY(maxH/3);
-
 
 			root.getChildren().add(c3);
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 		}
 
-
 	}
+	
+	
 
-	private void addTextBox()
+	private void addTextBox(TextArea t)
 	{
-		Button b = new Button();
-		b.setPrefSize(150, 40);
-		b.setLayoutX(maxW-b.getPrefWidth());
-		b.setLayoutY(b.getPrefHeight()*txtCount);
 
-		txtCount++;
-		//figure out limit later
+		String[] inputs = t.getText().split("\n");
+		
+		int c=0;
+		
+		for(int i=0; i< inputs.length; i++)
+		{
+			//-fx-border-color: #8f7a66
+			if(!inputs[i].isEmpty() && inputs[i].trim().length()>0)
+			{
+				Button b = new Button();
+				b.setPrefSize(150, 30);
+				b.setLayoutX(maxW-b.getPrefWidth());
+				b.setLayoutY(b.getPrefHeight()*c);
+				b.setAlignment(Pos.CENTER);
+				b.setStyle("-fx-background-color:transparent;-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: "
+						+ "18px; -fx-font-weight:bold; ");
+				b.setText(inputs[i]);
+				
+				c++;
+				b.setOnMouseDragged(e->{
+					if( e.getButton().equals(MouseButton.PRIMARY))
+					{
+						b.setLayoutX(b.getLayoutX()+e.getX()-b.getWidth()/2);
+						b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);
+					}
+				});
+
+				b.setOnMouseClicked(e->{
+
+					if( e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2)
+					{
+						TextInputDialog dialog = new TextInputDialog();
+						dialog.setTitle("Set Text");
+						dialog.setHeaderText(null);
+						dialog.setContentText("");
+						Optional<String> result = dialog.showAndWait();
+						if (result.isPresent())
+						{
+							b.setText(result.get());
+						}
+					}
+					else if(e.getButton().equals(MouseButton.SECONDARY))
+					{
+						//for now delete
+						//in the future add an options panel
+						//text colours, background color, size
+						root.getChildren().remove(b);
+					}
+				});
+				
+				root.getChildren().add(b);
+
+			}
+		}
 
 		//add window limits so you cant drag off screen
-		b.setOnMouseDragged(e->{
-			if( e.getButton().equals(MouseButton.PRIMARY))
-			{
-				b.setLayoutX(b.getLayoutX()+e.getX()-b.getWidth()/2);
-				b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);
-			}
-		});
-
-
 		//going to add right click to access options
-		b.setOnMouseClicked(e->{
-			if( e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2)
-			{
-				TextInputDialog dialog = new TextInputDialog();
-				dialog.setTitle("Set Text");
-				dialog.setHeaderText(null);
-				dialog.setContentText("");
-				Optional<String> result = dialog.showAndWait();
-				if (result.isPresent())
-				{
-					b.setText(result.get());
-				}
-			}
-			else if(e.getButton().equals(MouseButton.SECONDARY))
-			{
-				//for now delete
-				//in the future add an options panel
-				//text colours, background color, size
-				root.getChildren().remove(b);
-				
-			}
-		});
-		root.getChildren().add(b);
+
 	}
 
 }

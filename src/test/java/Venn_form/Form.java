@@ -211,6 +211,7 @@ public class Form
 			chk.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			chk.setId("0");
 			test.getChildren().add(chk);
+			
 			chk.setOnAction(e->{
 				if(chk.isSelected())
 					chk.setId("1");
@@ -238,6 +239,8 @@ public class Form
 					btnDone.setDisable(true);
 				}
 			});
+			
+			chk.fire();
 		}
 
 

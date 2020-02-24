@@ -75,7 +75,6 @@ public class Venn extends Stage
 
 		});
 
-
 		root = new Pane();
 		root.setPadding(new Insets(15,15,15,15));
 
@@ -105,7 +104,6 @@ public class Venn extends Stage
 			f.setButton(init);
 			init.setDisable(true);
 		});
-
 
 		VBox panel = new VBox(20);
 		panel.setAlignment(Pos.CENTER);

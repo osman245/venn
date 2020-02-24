@@ -44,20 +44,8 @@ public class Venn extends Stage
 
 	}
 
-	public void startStage() {
+	private void startStage() {
 		// making a basic gui
-<<<<<<< HEAD
-		
-		Stage s = new Stage();
-		GridPane root = new GridPane();
-		root.setPadding(new Insets(15,15,15,15));
-		root.setAlignment(Pos.CENTER);
-		
-		
-		Scene scene = new Scene(root,1200,600);
-		root.setStyle("-fx-background-color:#ffffff;");
-	
-=======
 
 		this.setMaximized(true);
 		this.setResizable(false);
@@ -102,7 +90,6 @@ public class Venn extends Stage
 		scene = new Scene(root);
 		root.setStyle("-fx-background-color:#faf8ef;");
 
->>>>>>> Parssa
 		//graphic text for the button
 		Text txtInit = new Text("Create a new Venn Diagram");
 		txtInit.setFontSmoothingType(FontSmoothingType.GRAY);
@@ -113,34 +100,6 @@ public class Venn extends Stage
 		init.setStyle("-fx-background-color: #8f7a66;");
 		init.setPrefSize(200, 75);
 		init.setAlignment(Pos.CENTER);
-<<<<<<< HEAD
-		
-		
-		
-	
-		VBox panel = new VBox(20);
-		panel.setAlignment(Pos.CENTER);
-		panel.getChildren().add(init);
-		panel.setLayoutX(scene.getWidth()/2-init.getPrefWidth()/2);
-		panel.setLayoutY(scene.getHeight()/2-init.getPrefHeight()/2);	
-		
-		root.add(panel,0,0);
-		
-		init.setOnAction(e ->{  //when you press the button to create venn diagram
-			Form f = new Form();
-			f.setButton(init,panel);
-			 
-			
-		});
-		s.setTitle("custom venn diagram maker");
-		s.getIcons().clear();
-		//s.getIcons().add(new Image("/Images/VennIcon"+".png"));
-		s.setScene(scene);
-		s.show();
-	   
-		
-	
-=======
 		init.setOnAction(e ->{
 			Form f = new Form();
 			f.setButton(init);
@@ -398,7 +357,6 @@ public class Venn extends Stage
 		//add window limits so you cant drag off screen
 		//going to add right click to access options
 
->>>>>>> Parssa
 	}
 
 }

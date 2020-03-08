@@ -326,7 +326,7 @@ public class Venn extends Stage
 
 				b.setOnMouseClicked(e->{
 
-					if( e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2)
+					if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
 					{
 						TextInputDialog dialog = new TextInputDialog();
 						dialog.setTitle("Set Text");
@@ -358,6 +358,7 @@ public class Venn extends Stage
 							 * }
 							 */
 							
+							root.getChildren().remove(b);						
 							
 							
 						});

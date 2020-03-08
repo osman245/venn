@@ -3,13 +3,16 @@ package Venn;
 import java.util.Optional;
 
 import Venn_form.Form;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -329,19 +332,47 @@ public class Venn extends Stage
 						dialog.setTitle("Set Text");
 						dialog.setHeaderText(null);
 						dialog.setContentText("");
-						Optional<String> result = dialog.showAndWait();
+						dialog.getDialogPane().getButtonTypes().clear();
+						
+						ButtonType delete = new ButtonType("delete");
+												
+						dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
+									
+						
+						Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
+						btnDel.addEventFilter(ActionEvent.ACTION, event->
+						{
+							/*
+							 * Alert alert = new Alert(AlertType.CONFIRMATION);
+							 * alert.setContentText("Are you sure you want to delete this text box?");
+							 * alert.setHeaderText(null); alert.getButtonTypes().clear();
+							 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+							 * 
+							 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
+							 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+							 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
+							 * 
+							 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
+							 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
+							 * 
+							 * }
+							 */
+							
+							
+							
+						});
+						
+						Optional<String> result = (dialog).showAndWait();
+						
 						if (result.isPresent())
 						{
+							if(result.get().length()==0)
+								root.getChildren().remove(b);
 							l.setText(result.get());
 						}
+						
 					}
-					else if(e.getButton().equals(MouseButton.SECONDARY))
-					{
-						//for now delete
-						//in the future add an options panel
-						//text colours, background color, size
-						root.getChildren().remove(b);
-					}
+					
 				});
 				
 				root.getChildren().add(b);

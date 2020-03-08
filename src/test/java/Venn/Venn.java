@@ -149,6 +149,10 @@ public class Venn extends Stage
 		add.setOnAction(e->addTextBox(ta));
 		//---------------------Save button----------------------------------
 		Button save = new Button("SAVE");
+		save.setLayoutX(root.getPrefWidth() + 50);
+		save.setLayoutY(root.getPrefHeight());
+		save.setAlignment(Pos.TOP_LEFT);
+		
 		save.setOnAction(e -> {
 			try {
 				Save_Venn(ta);
@@ -156,15 +160,18 @@ public class Venn extends Stage
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		});
-				
-		save.setLayoutX(root.getPrefWidth() + 50);
-		save.setLayoutY(root.getPrefHeight());
-		save.setAlignment(Pos.TOP_LEFT);	
+		});	
+		
+		//---------------Load button---------------------------------------
+		Button load = new Button("LOAD");
+		load.setLayoutX(root.getPrefWidth() + 150);
+		load.setLayoutY(root.getPrefHeight());
+		load.setAlignment(Pos.TOP_LEFT);
 
 		root.getChildren().add(add);
 		root.getChildren().add(ta);
 		root.getChildren().add(save);
+		root.getChildren().add(load);
 
 		//check the code and add the correct amount of circles accordingly 
 		/*
@@ -386,7 +393,7 @@ public class Venn extends Stage
             new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
        
-        File file = fileChooser.showSaveDialog();
+        File file = fileChooser
         
         if(file != null){
             SaveFile(t.getText(), file);

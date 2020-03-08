@@ -1,7 +1,9 @@
 package Venn;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Optional;
-
 import Venn_form.Form;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -144,9 +147,24 @@ public class Venn extends Stage
 		ta.setWrapText(true);
 
 		add.setOnAction(e->addTextBox(ta));
+		//---------------------Save button----------------------------------
+		Button save = new Button("SAVE");
+		save.setOnAction(e -> {
+			try {
+				Save_Venn(ta);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+				
+		save.setLayoutX(root.getPrefWidth() + 50);
+		save.setLayoutY(root.getPrefHeight());
+		save.setAlignment(Pos.TOP_LEFT);	
 
 		root.getChildren().add(add);
 		root.getChildren().add(ta);
+		root.getChildren().add(save);
 
 		//check the code and add the correct amount of circles accordingly 
 		/*
@@ -356,5 +374,47 @@ public class Venn extends Stage
 		//going to add right click to access options
 
 	}
-
+	
+	private void Save_Venn(TextArea t) throws IOException {
+		Stage primaryStage ;
+		
+	
+		FileChooser fileChooser = new FileChooser();
+        
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter = 
+            new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+       
+        File file = fileChooser.showSaveDialog();
+        
+        if(file != null){
+            SaveFile(t.getText(), file);
+	}
+	}
+	
+	private void SaveFile(String content, File file) throws IOException{
+        
+            FileWriter fileWriter;
+              
+            fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.close();
+        
+          
+    }
+	private void LoadFile(String content, File file) throws IOException{
+        
+        FileWriter fileWriter;
+          
+        fileWriter = new FileWriter(file);
+        fileWriter.write(content);
+        fileWriter.close();
+    
+      
 }
+	
+	
+}
+
+

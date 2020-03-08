@@ -236,6 +236,7 @@ public class Venn extends Stage
 		
 		
 
+		//adding the circles to the scene here
 		if(code.equals("1"))
 		{
 			Circle c1 = new Circle(maxW/4.5);

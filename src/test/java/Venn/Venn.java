@@ -917,7 +917,6 @@ Optional<String> result = (dialog).showAndWait();
 						b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);
 					}
 				});
-
 				
 				b.setOnMouseClicked(e->{
 

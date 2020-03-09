@@ -918,6 +918,7 @@ Optional<String> result = (dialog).showAndWait();
 					}
 				});
 
+				
 				b.setOnMouseClicked(e->{
 
 					if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))

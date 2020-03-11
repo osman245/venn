@@ -433,7 +433,7 @@ Optional<String> result = (dialog).showAndWait();
 					
 					if (result.isPresent())
 					{
-						if(result.get().length()==0)
+						if( result.get().length()==0)
 							root.getChildren().remove(label2);
 						label2.setText(result.get());
 					}		

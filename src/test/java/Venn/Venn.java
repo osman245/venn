@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.util.Optional;
 import Venn_form.Form;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -151,12 +154,12 @@ public class Venn extends Stage
 
 		add.setOnAction(e->addTextBox(ta));
 		
-		//adding the colour choosers
+	/*	//adding the colour choosers
 		
 		
-			ColorPicker cp1 = new ColorPicker(/*Color.rgb(255,191,0)*/);
-			ColorPicker cp2 = new ColorPicker(/*Color.rgb(91,154,213)*/);
-			ColorPicker cp3 = new ColorPicker(/*Color.rgb(48,232,69)*/);
+			ColorPicker cp1 = new ColorPicker(Color.rgb(255,191,0));
+			ColorPicker cp2 = new ColorPicker(Color.rgb(91,154,213));
+			ColorPicker cp3 = new ColorPicker(Color.rgb(48,232,69));
 			
 			Label set1 = new Label("set1");
 			set1.setPrefSize(100, 40);
@@ -214,7 +217,7 @@ public class Venn extends Stage
 				set3.setLayoutY(cp3.getLayoutY());
 							
 				root.getChildren().addAll(cp1, cp2, cp3,set1,set2,set3);
-			}
+			}*/
 			
 		//---------------------Save button----------------------------------
 		Button save = new Button("SAVE");
@@ -237,10 +240,75 @@ public class Venn extends Stage
 		load.setLayoutY(root.getPrefHeight());
 		load.setAlignment(Pos.TOP_LEFT);
 
+
+				
+		ColorPicker cp1 = new ColorPicker(Color.rgb(255,191,0));
+		ColorPicker cp2 = new ColorPicker(Color.rgb(91,154,213));
+		ColorPicker cp3 = new ColorPicker(Color.rgb(48,232,69));
+		
+		/*
+		Label set1 = new Label("set1");
+		set1.setPrefSize(100, 40);
+		set1.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
+		set1.setAlignment(Pos.CENTER_RIGHT);
+		Label set2 = new Label("set2");
+		set2.setPrefSize(100, 40);
+		set2.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
+		set2.setAlignment(Pos.CENTER_RIGHT);
+		Label set3 = new Label("set3");
+		set3.setPrefSize(100, 40);
+		set3.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
+		set3.setAlignment(Pos.CENTER_RIGHT);
+		
+		if(code.length() == 1)
+		{		
+			cp1.setPrefSize(200, 40);
+			cp2.setPrefSize(200, 40);
+			
+			cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
+			cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
+			
+			set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
+			set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
+			
+			cp2.setLayoutY(maxH-cp1.getPrefHeight());
+			cp1.setLayoutY(maxH-cp2.getPrefHeight()*2);
+			
+			set2.setLayoutY(cp2.getLayoutY());
+			set1.setLayoutY(cp1.getLayoutY());
+						
+			root.getChildren().addAll(cp1, cp2,set1,set2);
+			
+		}
+		else
+		{			
+			cp1.setPrefSize(200, 40);
+			cp2.setPrefSize(200, 40);
+			cp3.setPrefSize(200, 40);
+			
+			cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
+			cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
+			cp3.setLayoutX(add.getLayoutX()-15-cp3.getPrefWidth());
+			
+			set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
+			set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
+			set3.setLayoutX(cp3.getLayoutX()-set3.getPrefWidth()-10);
+			
+			cp3.setLayoutY(maxH-cp1.getPrefHeight());
+			cp2.setLayoutY(maxH-cp2.getPrefHeight()*2);
+			cp1.setLayoutY(maxH-cp3.getPrefHeight()*3);
+			
+			set1.setLayoutY(cp1.getLayoutY());
+			set2.setLayoutY(cp2.getLayoutY());
+			set3.setLayoutY(cp3.getLayoutY());
+						
+			root.getChildren().addAll(cp1, cp2, cp3,set1,set2,set3);
+		}
+
 		root.getChildren().add(add);
 		root.getChildren().add(ta);
 		root.getChildren().add(save);
-		root.getChildren().add(load);
+		root.getChildren().add(load);*/
 
 		//check the code and add the correct amount of circles accordingly 
 		/*
@@ -254,7 +322,12 @@ public class Venn extends Stage
 		 * circle 3: #30e845
 		 * 
 		 */
+		
+		//setting up the event handlers 
+		
+		
 
+		//adding the circles to the scene here
 		if(code.equals("1"))
 		{
 			Label label1 = new Label("Label1");
@@ -279,7 +352,9 @@ public class Venn extends Stage
 			
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
+
 			label1.setOnMouseClicked(e->{
+
 
 				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
 				{
@@ -382,6 +457,7 @@ public class Venn extends Stage
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 			
+
 			label1.setOnMouseClicked(e->{
 
 				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
@@ -469,6 +545,7 @@ Optional<String> result = (dialog).showAndWait();
 				}
 			});
 			
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
@@ -511,6 +588,7 @@ Optional<String> result = (dialog).showAndWait();
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
+
 
 			label1.setOnMouseClicked(e->{
 
@@ -595,6 +673,11 @@ Optional<String> result = (dialog).showAndWait();
 					
 				}
 			});
+
+			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
+			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
+			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
+
 			
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
@@ -635,6 +718,10 @@ Optional<String> result = (dialog).showAndWait();
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/1.85);
 			c3.setLayoutY(maxH/2);		
+			
+			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
+			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
+			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
@@ -685,7 +772,7 @@ Optional<String> result = (dialog).showAndWait();
 					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
 					
 						
-Optional<String> result = (dialog).showAndWait();
+					Optional<String> result = (dialog).showAndWait();
 					
 					if (result.isPresent())
 					{
@@ -713,7 +800,7 @@ Optional<String> result = (dialog).showAndWait();
 								
 					
 					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-Optional<String> result = (dialog).showAndWait();
+					Optional<String> result = (dialog).showAndWait();
 					
 					if (result.isPresent())
 					{
@@ -766,6 +853,10 @@ Optional<String> result = (dialog).showAndWait();
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/3.225);
 			c3.setLayoutY(maxH/2.75);
+			
+			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
+			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
+			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
@@ -872,16 +963,6 @@ Optional<String> result = (dialog).showAndWait();
 	
 		
 	
-		
-		
-
-	private void changeCol(Color col, Circle c)
-	{
-		c.setFill(col);
-	}
-	
-	
-
 	private void addTextBox(TextArea t)
 	{
 		String[] inputs = t.getText().split("\n");
@@ -1022,6 +1103,10 @@ Optional<String> result = (dialog).showAndWait();
     
       
 }
+	private void changeCol(Color x, Circle y) {
+		
+	}
+	
 	
 	
 }

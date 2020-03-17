@@ -490,7 +490,7 @@ Optional<String> result = (dialog).showAndWait();
 
 			Label label2 = new Label("Label2");
 			label2.setLayoutX(maxW/2.75);
-			label2.setLayoutY(maxH/2 - 50);
+			label2.setLayoutY(maxH/2 - 50); 
 			
 			Circle c2 = new Circle(maxW/7);
 			c2.setStyle("-fx-fill: #ffbf00");

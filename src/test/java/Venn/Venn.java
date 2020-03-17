@@ -147,7 +147,7 @@ public class Venn extends Stage
 		ta.setLayoutX(maxW-ta.getPrefWidth()-15);
 		ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20);
 		ta.setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
-		ta.setWrapText(true);
+		ta.setWrapText(true); 
 
 		add.setOnAction(e->addTextBox(ta));
 		

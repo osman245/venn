@@ -149,71 +149,9 @@ public class Venn extends Stage
 		ta.setWrapText(true);
 
 		add.setOnAction(e->addTextBox(ta));
-		
-	/*	//adding the colour choosers
-		
-		
-			ColorPicker cp1 = new ColorPicker(Color.rgb(255,191,0));
-			ColorPicker cp2 = new ColorPicker(Color.rgb(91,154,213));
-			ColorPicker cp3 = new ColorPicker(Color.rgb(48,232,69));
-			
-			Label set1 = new Label("set1");
-			set1.setPrefSize(100, 40);
-			set1.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
-			set1.setAlignment(Pos.CENTER_RIGHT);
-			Label set2 = new Label("set2");
-			set2.setPrefSize(100, 40);
-			set2.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
-			set2.setAlignment(Pos.CENTER_RIGHT);
-			Label set3 = new Label("set3");
-			set3.setPrefSize(100, 40);
-			set3.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
-			set3.setAlignment(Pos.CENTER_RIGHT);
-			
-			if(code.length() == 1)
-			{		
-				cp1.setPrefSize(200, 40);
-				cp2.setPrefSize(200, 40);
-				
-				cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
-				cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
-				
-				set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
-				set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
-				
-				cp2.setLayoutY(maxH-cp1.getPrefHeight());
-				cp1.setLayoutY(maxH-cp2.getPrefHeight()*2);
-				
-				set2.setLayoutY(cp2.getLayoutY());
-				set1.setLayoutY(cp1.getLayoutY());
-							
-				root.getChildren().addAll(cp1, cp2,set1,set2);
-				
-			}
-			else
-			{			
-				cp1.setPrefSize(200, 40);
-				cp2.setPrefSize(200, 40);
-				cp3.setPrefSize(200, 40);
-				
-				cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
-				cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
-				cp3.setLayoutX(add.getLayoutX()-15-cp3.getPrefWidth());
-				
-				set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
-				set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
-				set3.setLayoutX(cp3.getLayoutX()-set3.getPrefWidth()-10);
-				
-				cp3.setLayoutY(maxH-cp1.getPrefHeight());
-				cp2.setLayoutY(maxH-cp2.getPrefHeight()*2);
-				cp1.setLayoutY(maxH-cp3.getPrefHeight()*3);
-				
-				set1.setLayoutY(cp1.getLayoutY());
-				set2.setLayoutY(cp2.getLayoutY());
-				set3.setLayoutY(cp3.getLayoutY());
-							
-				root.getChildren().addAll(cp1, cp2, cp3,set1,set2,set3);
-			}*/
+		root.getChildren().add(add);
+		root.getChildren().add(ta);
+	
 			
 		//---------------------Save button----------------------------------
 		Button save = new Button("SAVE");
@@ -406,6 +344,7 @@ public class Venn extends Stage
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
 			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
 
+			
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
@@ -458,6 +397,7 @@ public class Venn extends Stage
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
 			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
+			
 			
 			
 			root.getChildren().add(c1);
@@ -574,7 +514,6 @@ public class Venn extends Stage
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
 			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
-			
 			
 			root.getChildren().add(c3);
 			root.getChildren().add(c1);

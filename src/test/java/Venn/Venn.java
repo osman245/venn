@@ -241,7 +241,8 @@ public class Venn extends Stage
 		ColorPicker cp1 = new ColorPicker(Color.rgb(255,191,0));
 		ColorPicker cp2 = new ColorPicker(Color.rgb(91,154,213));
 		ColorPicker cp3 = new ColorPicker(Color.rgb(48,232,69));
-		
+	
+		//PARSSA WHAT IS THIS CODE FOR CAN IT BE DELETED
 		/*
 		Label set1 = new Label("set1");
 		set1.setPrefSize(100, 40);
@@ -351,6 +352,8 @@ public class Venn extends Stage
 
 			label1.setOnMouseClicked(e-> Label_click(label1, e));
 			label2.setOnMouseClicked(e->  Label_click(label2, e));
+			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
+			label2.setOnMouseDragged(e -> DragLabel(label2,  e));			
 			
 			
 			root.getChildren().add(c1);
@@ -398,6 +401,10 @@ public class Venn extends Stage
 			label1.setOnMouseClicked(e-> Label_click(label1, e));
 			label2.setOnMouseClicked(e-> Label_click(label2, e));
 			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			
+			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
+			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
+			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
 
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
@@ -441,16 +448,17 @@ public class Venn extends Stage
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
-
-			label1.setOnMouseClicked(e-> Label_click(label1, e));
-			label2.setOnMouseClicked(e-> Label_click(label2, e));
-			label3.setOnMouseClicked(e-> Label_click(label3, e));
-			
-
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 
+			label1.setOnMouseClicked(e-> Label_click(label1, e));
+			label2.setOnMouseClicked(e-> Label_click(label2, e));
+			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
+			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
+			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
+			
 			
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
@@ -503,7 +511,10 @@ public class Venn extends Stage
 			label1.setOnMouseClicked(e-> Label_click(label1, e));
 			label2.setOnMouseClicked(e-> Label_click(label1, e));
 			label3.setOnMouseClicked(e-> Label_click(label1, e));
-			
+			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
+			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
+			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
+					
 
 			
 			root.getChildren().add(c1);
@@ -560,6 +571,10 @@ public class Venn extends Stage
 			label1.setOnMouseClicked(e-> Label_click(label1, e));
 			label2.setOnMouseClicked(e-> Label_click(label2, e));
 			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
+			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
+			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
+			
 			
 			root.getChildren().add(c3);
 			root.getChildren().add(c1);
@@ -626,22 +641,21 @@ public class Venn extends Stage
 						Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
 						btnDel.addEventFilter(ActionEvent.ACTION, event->
 						{
-							/*
-							 * Alert alert = new Alert(AlertType.CONFIRMATION);
-							 * alert.setContentText("Are you sure you want to delete this text box?");
-							 * alert.setHeaderText(null); alert.getButtonTypes().clear();
-							 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
-							 * 
-							 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
-							 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
-							 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
-							 * 
-							 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
-							 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
-							 * 
-							 * }
-							 */
 							
+							  Alert alert = new Alert(AlertType.CONFIRMATION);
+							  alert.setContentText("Are you sure you want to delete this text box?");
+							  alert.setHeaderText(null); alert.getButtonTypes().clear();
+							  alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+							  
+							  dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
+							  dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+							  dialog.getDialogPane().lookupButton(delete).setDisable(true);
+							  
+							  Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
+							  ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
+							 
+							  }
+							 						
 							root.getChildren().remove(b);						
 							
 							
@@ -675,31 +689,10 @@ public class Venn extends Stage
 	}
 	
 	private void Save_Venn(TextArea t) throws IOException {
-		Stage primaryStage ;
-		
 	
-		FileChooser fileChooser = new FileChooser();
-        
-        //Set extension filter
-        FileChooser.ExtensionFilter extFilter = 
-            new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
-       
-        //File file = fileChooser
-        
-       // if(file != null){
-       //     SaveFile(t.getText(), file);
 	}
-	
-	
 	private void SaveFile(String content, File file) throws IOException{
-        
-            FileWriter fileWriter;
-              
-            fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
-        
+    
           
     }
 	private void LoadFile(String content, File file) throws IOException{
@@ -715,7 +708,6 @@ public class Venn extends Stage
 	private void changeCol(Color x, Circle y) {
 		
 	}
-	
 	private void Label_click(Label l,MouseEvent e) {
 		if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
 		{
@@ -734,16 +726,22 @@ public class Venn extends Stage
 			if (result.isPresent())
 			{
 				if(result.get().length()==0) {
-					l.setText("Enter Set Name");
+					l.setText(l.getText());
 				}
 				else
 				l.setText(result.get());
 			}	
 	}
-	
-	
-	
 }
+	private void DragLabel(Label l, MouseEvent e) {
+		
+		if( e.getButton().equals(MouseButton.PRIMARY))
+		{
+			l.setLayoutX(l.getLayoutX()+e.getX()-l.getWidth()/2);
+			l.setLayoutY(l.getLayoutY()+e.getY()-l.getHeight()/2);
+		}
+	
+	}
 }
 
 

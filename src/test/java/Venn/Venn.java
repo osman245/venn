@@ -6,25 +6,21 @@ import java.io.IOException;
 import java.util.Optional;
 import Venn_form.Form;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -353,67 +349,8 @@ public class Venn extends Stage
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 
-			label1.setOnMouseClicked(e->{
-
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label1);
-						label1.setText(result.get());
-					}	
-												
-						
-						
-				}
-			});
-			label2.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label2);
-						label2.setText(result.get());
-					}	
-												
-						
-						
-				}
-			});
+			label1.setOnMouseClicked(e-> Label_click(label1, e));
+			label2.setOnMouseClicked(e->  Label_click(label2, e));
 			
 			
 			root.getChildren().add(c1);
@@ -458,93 +395,9 @@ public class Venn extends Stage
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 			
 
-			label1.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-						
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label1);
-						label1.setText(result.get());
-					}							
-						
-						
-				}
-			});
-			label2.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if( result.get().length()==0)
-							root.getChildren().remove(label2);
-						label2.setText(result.get());
-					}		
-					
-				}
-			});
-			label3.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-	
-Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label3);
-						label3.setText(result.get());
-					}		
-					
-				}
-			});
-			
+			label1.setOnMouseClicked(e-> Label_click(label1, e));
+			label2.setOnMouseClicked(e-> Label_click(label2, e));
+			label3.setOnMouseClicked(e-> Label_click(label3, e));
 
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
@@ -589,90 +442,10 @@ Optional<String> result = (dialog).showAndWait();
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 
-
-			label1.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-	
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label1);
-						label1.setText(result.get());
-					}	
-					
-				}
-			});
-			label2.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-
-Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label2);
-						label2.setText(result.get());
-					}		
-					
-				}
-			});
-			label3.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label3);
-						label3.setText(result.get());
-					}		
-					
-				}
-			});
+			label1.setOnMouseClicked(e-> Label_click(label1, e));
+			label2.setOnMouseClicked(e-> Label_click(label2, e));
+			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			
 
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
@@ -727,89 +500,11 @@ Optional<String> result = (dialog).showAndWait();
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 			
-			label1.setOnMouseClicked(e->{
+			label1.setOnMouseClicked(e-> Label_click(label1, e));
+			label2.setOnMouseClicked(e-> Label_click(label1, e));
+			label3.setOnMouseClicked(e-> Label_click(label1, e));
+			
 
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label1);
-						label1.setText(result.get());
-					}	
-				}
-			});
-			label2.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-						
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label2);
-						label2.setText(result.get());
-					}									
-						
-						
-				}
-			});
-			label3.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label3);
-						label3.setText(result.get());
-					}		
-				}
-			});
 			
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
@@ -862,96 +557,10 @@ Optional<String> result = (dialog).showAndWait();
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
 			
-			label1.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label1);
-						label1.setText(result.get());
-					}	
-												
-						
-						
-				}
-			});
-			label2.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label2);
-						label2.setText(result.get());
-					}	
-												
-						
-						
-				}
-			});
-			label3.setOnMouseClicked(e->{
-
-				if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-				{
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Set Label");
-					dialog.setHeaderText(null);
-					dialog.setContentText("");
-					dialog.getDialogPane().getButtonTypes().clear();
-					
-					ButtonType delete = new ButtonType("delete");
-											
-					dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-								
-					
-					Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-					
-					Optional<String> result = (dialog).showAndWait();
-					
-					if (result.isPresent())
-					{
-						if(result.get().length()==0)
-							root.getChildren().remove(label3);
-						label3.setText(result.get());
-					}	
-												
-						
-						
-				}
-			});
+			label1.setOnMouseClicked(e-> Label_click(label1, e));
+			label2.setOnMouseClicked(e-> Label_click(label2, e));
+			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			
 			root.getChildren().add(c3);
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
@@ -1107,8 +716,34 @@ Optional<String> result = (dialog).showAndWait();
 		
 	}
 	
+	private void Label_click(Label l,MouseEvent e) {
+		if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
+		{
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Set Label");
+			dialog.setHeaderText(null);
+			dialog.setContentText("");
+			dialog.getDialogPane().getButtonTypes().clear();
+			
+									
+			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL );
+						
+			
+			Optional<String> result = (dialog).showAndWait();
+			
+			if (result.isPresent())
+			{
+				if(result.get().length()==0) {
+					l.setText("Enter Set Name");
+				}
+				else
+				l.setText(result.get());
+			}	
+	}
 	
 	
+	
+}
 }
 
 

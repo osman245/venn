@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Optional;
 import Venn_form.Form;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -27,7 +26,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -53,7 +51,7 @@ public class Venn extends Stage
 		// making a basic gui
 
 		this.setMaximized(true);
-		this.setResizable(true);
+		this.setResizable(false);
 
 
 		this.setOnCloseRequest(e->{
@@ -149,9 +147,14 @@ public class Venn extends Stage
 		ta.setWrapText(true);
 
 		add.setOnAction(e->addTextBox(ta));
-		root.getChildren().add(add);
-		root.getChildren().add(ta);
-	
+		
+	//	Menu labelcustom = new Menu("Labels");
+		//-------------------info button-----------------------------------
+		
+		Button info = new Button("info");
+		info.setLayoutX(root.getPrefWidth() + 250);
+		info.setLayoutY(root.getPrefHeight());
+		info.setAlignment(Pos.TOP_LEFT);
 			
 		//---------------------Save button----------------------------------
 		Button save = new Button("SAVE");
@@ -179,7 +182,69 @@ public class Venn extends Stage
 		ColorPicker cp1 = new ColorPicker(Color.rgb(255,191,0));
 		ColorPicker cp2 = new ColorPicker(Color.rgb(91,154,213));
 		ColorPicker cp3 = new ColorPicker(Color.rgb(48,232,69));
-	
+		
+		Label set1 = new Label("set1");
+		set1.setPrefSize(100, 40);
+		set1.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
+		set1.setAlignment(Pos.CENTER_RIGHT);
+		Label set2 = new Label("set2");
+		set2.setPrefSize(100, 40);
+		set2.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
+		set2.setAlignment(Pos.CENTER_RIGHT);
+		Label set3 = new Label("set3");
+		set3.setPrefSize(100, 40);
+		set3.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
+		set3.setAlignment(Pos.CENTER_RIGHT);
+		
+		if(code.length() == 1)
+		{		
+			cp1.setPrefSize(200, 40);
+			cp2.setPrefSize(200, 40);
+			
+			cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
+			cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
+			
+			set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
+			set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
+			
+			cp2.setLayoutY(maxH-cp1.getPrefHeight());
+			cp1.setLayoutY(maxH-cp2.getPrefHeight()*2);
+			
+			set2.setLayoutY(cp2.getLayoutY());
+			set1.setLayoutY(cp1.getLayoutY());
+						
+			root.getChildren().addAll(cp1, cp2,set1,set2);
+			
+		}
+		else
+		{			
+			cp1.setPrefSize(200, 40);
+			cp2.setPrefSize(200, 40);
+			cp3.setPrefSize(200, 40);
+			
+			cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
+			cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
+			cp3.setLayoutX(add.getLayoutX()-15-cp3.getPrefWidth());
+			
+			set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
+			set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
+			set3.setLayoutX(cp3.getLayoutX()-set3.getPrefWidth()-10);
+			
+			cp3.setLayoutY(maxH-cp1.getPrefHeight());
+			cp2.setLayoutY(maxH-cp2.getPrefHeight()*2);
+			cp1.setLayoutY(maxH-cp3.getPrefHeight()*3);
+			
+			set1.setLayoutY(cp1.getLayoutY());
+			set2.setLayoutY(cp2.getLayoutY());
+			set3.setLayoutY(cp3.getLayoutY());
+						
+			root.getChildren().addAll(cp1, cp2, cp3,set1,set2,set3);
+		}
+		
+		
+		//ROOT
+		root.getChildren().addAll(add,ta,save,load,info);
+
 		
 		//setting up the event handlers 
 		
@@ -188,6 +253,7 @@ public class Venn extends Stage
 		//adding the circles to the scene here
 		if(code.equals("1"))
 		{
+			
 			Label label1 = new Label("Label1");
 			label1.setLayoutX(maxW/4+10);
 			label1.setLayoutY(maxH/2 - 50);
@@ -567,8 +633,9 @@ public class Venn extends Stage
     
       
 }
-	private void changeCol(Color x, Circle y) {
-		
+	private void changeCol(Color col, Circle c)
+	{
+		c.setFill(col);
 	}
 	private void Label_click(Label l,MouseEvent e) {
 		if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))

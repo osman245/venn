@@ -16,11 +16,11 @@ import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class TextBox 
+public class TextBox extends VBox
 {
 
 	private Text t;
-	private VBox p;
+//	private VBox p;
 	private Pane root;
 
 
@@ -32,8 +32,9 @@ public class TextBox
 	public TextBox(String text)
 	{
 
-		p = new VBox();
-		p.setAlignment(Pos.CENTER);	
+		//p = new VBox();
+		super();
+		setAlignment(Pos.CENTER);	
 
 		t = new Text();
 		t.setText(text);
@@ -41,10 +42,10 @@ public class TextBox
 		t.setTextAlignment(TextAlignment.CENTER);
 		t.setFontSmoothingType(FontSmoothingType.GRAY);			
 
-		p.getChildren().addAll(t);
+		getChildren().addAll(t);
 		
-		p.setOnMouseDragged(e->move(e));
-		p.setOnMouseClicked(e->mouseClickEvent(e));
+		setOnMouseDragged(e->move(e));
+		setOnMouseClicked(e->mouseClickEvent(e));
 
 
 	}
@@ -107,14 +108,14 @@ public class TextBox
 	{
 		  if( e.getButton().equals(MouseButton.PRIMARY))
 			{
-				setXpos(getX()+e.getX()-getWidth()/2);
-				setYpos(getY()+e.getY()-getHeight()/2);
+				setXpos(getX()+e.getX()-getPrefWidth()/2);
+				setYpos(getY()+e.getY()-getPrefHeight()/2);
 			}
 	}
 
 	public Node getNode()
 	{
-		return p;
+		return this;
 	}
 	public void setText(String text)
 	{
@@ -123,14 +124,15 @@ public class TextBox
 
 	public void setContainerStyle(String style)
 	{
-		p.setStyle(style);}
+		setStyle(style);
+	}
 	public void setTextStyle(String style)
 	{
 		t.setStyle(style);
 	}
 	public void setSize(double width, double height)
 	{
-		p.setPrefSize(width, height);
+		setPrefSize(width, height);
 		t.setWrappingWidth(width);
 	}
 
@@ -140,29 +142,22 @@ public class TextBox
 	}
 	public void setXpos(double xPos)
 	{
-		p.setLayoutX(xPos);
+		setLayoutX(xPos);
 	}
 	public void setYpos(double yPos)
 	{
-		p.setLayoutY(yPos);
+		setLayoutY(yPos);
 	}
 
 	public double getX() 
 	{
-		return p.getLayoutX();
+		return getLayoutX();
 	}
 	public double getY() 
 	{
-		return p.getLayoutY();
+		return getLayoutY();
 	}
-	public double getWidth()
-	{
-		return p.getPrefWidth();
-	}
-	public double getHeight() 
-	{
-		return p.getPrefHeight();
-	}
+	
 
 
 }

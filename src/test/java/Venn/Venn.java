@@ -397,20 +397,19 @@ public class Venn extends Stage
 			//-fx-border-color: #8f7a66
 			if(!inputs[i].isEmpty() && inputs[i].trim().length()>0)
 			{
-				
-					
+									
 				TextBox tb = new TextBox();
 				tb.setSize(150, 60);
 				tb.setText(inputs[i]);
 				tb.setContainerStyle("-fx-background-color: green;");
 				tb.setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;" );
 				tb.setRoot(root);					
-				tb.setXpos(maxW-tb.getWidth()-20);
-				tb.setYpos(tb.getHeight()*c);
+				tb.setXpos(maxW-tb.getPrefWidth()-20);
+				tb.setYpos(tb.getPrefHeight()*c);
 							
 				c++;					
 				
-				root.getChildren().add(tb.getNode());
+				root.getChildren().add(tb);
 				
 
 			}

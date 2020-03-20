@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -401,28 +402,28 @@ public class Venn extends Stage
 				TextBox tb = new TextBox();
 				tb.setSize(150, 60);
 				tb.setText(inputs[i]);
-				tb.setContainerStyle("-fx-background-color: transparent;");
+				tb.setContainerStyle("-fx-background-color: green;");
 				tb.setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;" );
 				
 				tb.setRoot(root);
 				
-				Button b = tb.getButton();
-				b.setLayoutX(maxW-b.getPrefWidth()-20);
-				b.setLayoutY(b.getPrefHeight()*c);
-				b.setAlignment(Pos.CENTER);		
+					
+				tb.setXpos(maxW-tb.getWidth()-20);
+				tb.setYpos(tb.getHeight()*c);
+				
 				
 				c++;
-				b.setOnMouseDragged(e->{
+				tb.getNode().setOnMouseDragged(e->{
 					if( e.getButton().equals(MouseButton.PRIMARY))
 					{
-						b.setLayoutX(b.getLayoutX()+e.getX()-b.getPrefWidth()/2);
-						b.setLayoutY(b.getLayoutY()+e.getY()-b.getPrefHeight()/2);
+						tb.setXpos(tb.getX()+e.getX()-tb.getWidth()/2);
+						tb.setYpos(tb.getY()+e.getY()-tb.getHeight()/2);
 					}
 				});
 
 				
 				
-				b.setOnMouseClicked(e->{
+				tb.getNode().setOnMouseClicked(e->{
 
 					if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
 					{

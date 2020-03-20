@@ -396,32 +396,32 @@ public class Venn extends Stage
 			//-fx-border-color: #8f7a66
 			if(!inputs[i].isEmpty() && inputs[i].trim().length()>0)
 			{
-				Button b = new Button();
-				Label l = new Label();
 				
-				l.setPrefSize(150, 60);
-				l.setWrapText(true);
-				l.setAlignment(Pos.CENTER);
-				l.setText(inputs[i]);
-				l.setStyle("-fx-background-color:transparent;-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: "
-						+ "18px; -fx-font-weight:bold; ");
-				b.setStyle("-fx-background-color:transparent;-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: "
-						+ "18px; -fx-font-weight:bold; ");
-								b.setGraphic(l);
+					
+				TextBox tb = new TextBox();
+				tb.setSize(150, 60);
+				tb.setText(inputs[i]);
+				tb.setContainerStyle("-fx-background-color: transparent;");
+				tb.setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;" );
 				
-				b.setLayoutX(maxW-l.getPrefWidth()-20);
-				b.setLayoutY(l.getPrefHeight()*c);
+				tb.setRoot(root);
+				
+				Button b = tb.getButton();
+				b.setLayoutX(maxW-b.getPrefWidth()-20);
+				b.setLayoutY(b.getPrefHeight()*c);
 				b.setAlignment(Pos.CENTER);		
 				
 				c++;
 				b.setOnMouseDragged(e->{
 					if( e.getButton().equals(MouseButton.PRIMARY))
 					{
-						b.setLayoutX(b.getLayoutX()+e.getX()-b.getWidth()/2);
-						b.setLayoutY(b.getLayoutY()+e.getY()-b.getHeight()/2);
+						b.setLayoutX(b.getLayoutX()+e.getX()-b.getPrefWidth()/2);
+						b.setLayoutY(b.getLayoutY()+e.getY()-b.getPrefHeight()/2);
 					}
 				});
 
+				
+				
 				b.setOnMouseClicked(e->{
 
 					if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
@@ -456,7 +456,7 @@ public class Venn extends Stage
 							 * }
 							 */
 							
-							root.getChildren().remove(b);						
+							root.getChildren().remove(tb.getNode());						
 							
 							
 						});
@@ -466,15 +466,16 @@ public class Venn extends Stage
 						if (result.isPresent())
 						{
 							if(result.get().length()==0)
-								root.getChildren().remove(b);
-							l.setText(result.get());
+								root.getChildren().remove(tb.getNode());
+							tb.setText(result.get());
 						}
 						
 					}
 					
 				});
 				
-				root.getChildren().add(b);
+				root.getChildren().add(tb.getNode());
+				
 
 			}
 		}

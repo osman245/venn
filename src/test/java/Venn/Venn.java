@@ -404,76 +404,11 @@ public class Venn extends Stage
 				tb.setText(inputs[i]);
 				tb.setContainerStyle("-fx-background-color: green;");
 				tb.setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;" );
-				
-				tb.setRoot(root);
-				
-					
+				tb.setRoot(root);					
 				tb.setXpos(maxW-tb.getWidth()-20);
 				tb.setYpos(tb.getHeight()*c);
-				
-				
-				c++;
-				tb.getNode().setOnMouseDragged(e->{
-					if( e.getButton().equals(MouseButton.PRIMARY))
-					{
-						tb.setXpos(tb.getX()+e.getX()-tb.getWidth()/2);
-						tb.setYpos(tb.getY()+e.getY()-tb.getHeight()/2);
-					}
-				});
-
-				
-				
-				tb.getNode().setOnMouseClicked(e->{
-
-					if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-					{
-						TextInputDialog dialog = new TextInputDialog();
-						dialog.setTitle("Set Text");
-						dialog.setHeaderText(null);
-						dialog.setContentText("");
-						dialog.getDialogPane().getButtonTypes().clear();
-						
-						ButtonType delete = new ButtonType("delete");
-												
-						dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
-									
-						
-						Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-						btnDel.addEventFilter(ActionEvent.ACTION, event->
-						{
-							/*
-							 * Alert alert = new Alert(AlertType.CONFIRMATION);
-							 * alert.setContentText("Are you sure you want to delete this text box?");
-							 * alert.setHeaderText(null); alert.getButtonTypes().clear();
-							 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
-							 * 
-							 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
-							 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
-							 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
-							 * 
-							 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
-							 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
-							 * 
-							 * }
-							 */
 							
-							root.getChildren().remove(tb.getNode());						
-							
-							
-						});
-						
-						Optional<String> result = (dialog).showAndWait();
-						
-						if (result.isPresent())
-						{
-							if(result.get().length()==0)
-								root.getChildren().remove(tb.getNode());
-							tb.setText(result.get());
-						}
-						
-					}
-					
-				});
+				c++;					
 				
 				root.getChildren().add(tb.getNode());
 				

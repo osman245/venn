@@ -1,8 +1,15 @@
 package Venn;
+import java.util.Optional;
+
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontSmoothingType;
@@ -35,8 +42,74 @@ public class TextBox
 		t.setFontSmoothingType(FontSmoothingType.GRAY);			
 
 		p.getChildren().addAll(t);
+		
+		p.setOnMouseDragged(e->move(e));
+		p.setOnMouseClicked(e->mouseClickEvent(e));
 
 
+	}
+
+	private void mouseClickEvent(MouseEvent e)
+	{
+
+			if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
+			{
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Set Text");
+				dialog.setHeaderText(null);
+				dialog.setContentText("");
+				dialog.getDialogPane().getButtonTypes().clear();
+				
+				ButtonType delete = new ButtonType("delete");
+										
+				dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
+							
+				
+				Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
+				btnDel.addEventFilter(ActionEvent.ACTION, event->
+				{
+					/*
+					 * Alert alert = new Alert(AlertType.CONFIRMATION);
+					 * alert.setContentText("Are you sure you want to delete this text box?");
+					 * alert.setHeaderText(null); alert.getButtonTypes().clear();
+					 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+					 * 
+					 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
+					 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+					 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
+					 * 
+					 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
+					 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
+					 * 
+					 * }
+					 */
+					
+					root.getChildren().remove(getNode());						
+					
+					
+				});
+				
+				Optional<String> result = (dialog).showAndWait();
+				
+				if (result.isPresent())
+				{
+					if(result.get().length()==0)
+						root.getChildren().remove(getNode());
+					setText(result.get());
+				}
+				
+			}
+			
+		}
+	
+
+	private void move(MouseEvent e) 
+	{
+		  if( e.getButton().equals(MouseButton.PRIMARY))
+			{
+				setXpos(getX()+e.getX()-getWidth()/2);
+				setYpos(getY()+e.getY()-getHeight()/2);
+			}
 	}
 
 	public Node getNode()

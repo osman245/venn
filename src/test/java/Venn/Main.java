@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package Venn;
 	
 import javafx.application.Application;
@@ -21,3 +22,5 @@ public class Main extends Application {
 }
 
 
+=======
+>>>>>>> branch 'Jada246' of https://github.com/osman245/venn.git

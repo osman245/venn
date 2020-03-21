@@ -705,4 +705,6 @@ public class Venn extends Stage
 	
 		root.getChildren().add(cp);
 	}
-}
+
+	}
+	

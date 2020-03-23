@@ -3,9 +3,10 @@ package Venn_form;
 import java.util.ArrayList;
 import java.util.List;
 
+import Venn.Main;
+import Venn.Venn;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,8 +37,9 @@ public class Form
 	private String codeTxt;
 	private ImageView i;
 	private Label preview;
-	private GridPane gridpane;
-	private VBox panel;
+	private Button btnDone;
+	private Stage stage;
+	
 
 	public Form()
 	{
@@ -49,10 +52,7 @@ public class Form
 
 		Stage s = new Stage();
 		s.setTitle("Venn Builder Form");
-		s.setResizable(true);
-	  
-		
-	
+		s.setResizable(false);
 
 		s.setOnCloseRequest(e->{
 
@@ -81,8 +81,8 @@ public class Form
 
 
 		root = new GridPane();
-		root.setPrefSize(500, 600);
-		root.setPadding(new Insets(15,15,15,15));
+		root.setPrefSize(400, 550);
+		root.setPadding(new Insets(20,15,20,15));
 		root.setAlignment(Pos.TOP_CENTER);
 		root.setHgap(20);
 		root.setVgap(20);
@@ -147,23 +147,27 @@ public class Form
 		preview.setStyle("-fx-fill:#8f7a66; -fx-font-size: 18px; -fx-font-weight:bold;");
 		preview.setVisible(false);
 		
-		HBox btnBox = new HBox(root.getPrefWidth());
-		Button btn = new Button("Finish");
-		btnBox.getChildren().add(btn);
-	
+		//done button
+		btnDone = new Button("Done");
+		btnDone.setVisible(false);
+		btnDone.setDisable(true);
+		btnDone.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold; -fx-background-color: #8f7a66;");
+		btnDone.setOnAction(e->{
+			
+			 Main.v.init(codeTxt);
+			s.close();
+			
+		});
+		
+		HBox bottom = new HBox();
+		bottom.getChildren().add(btnDone);
+		bottom.setAlignment(Pos.BOTTOM_RIGHT);
+		
 		root.addRow(0, topRow);
 		root.addRow(1,setRelations);
 		root.addRow(2,preview);
 		root.addRow(3,previewPic);
-	    
-		root.addRow(4, btnBox);
-		btn.setOnAction(e -> {
-			closeWindow(btn);
-			
-			
-			
-			
-		});
+		root.addRow(4, bottom);
 		//root.add(lblShapes,0,1);
 		//root.add(cboShapes, 1, 1);
 
@@ -176,8 +180,6 @@ public class Form
 
 
 	}
-
-	
 
 	private void fillCheckArray(String value, List<CheckBox> c)
 	{
@@ -205,14 +207,15 @@ public class Form
 
 
 		this.i.setVisible(false);
-	//	this.preview.setVisible(false);
+		btnDone.setVisible(false);
+		btnDone.setDisable(true);
 
-		//selections = new ArrayList<Boolean>();
 		for( CheckBox chk : c)
 		{
 			chk.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			chk.setId("0");
 			test.getChildren().add(chk);
+			
 			chk.setOnAction(e->{
 				if(chk.isSelected())
 					chk.setId("1");
@@ -228,19 +231,21 @@ public class Form
 				if(codes.contains(codeTxt) && codeTxt.length() == c.size())
 				{
 					this.i.setVisible(true);
-					//this.preview.setVisible(true);
 					this.i.setImage(new Image("/venn_pics/venn"+codeTxt+".png"));
+					btnDone.setVisible(true);
+					btnDone.setDisable(false);
 					System.out.println(codeTxt);
 				}
 				else
 				{
 					this.i.setVisible(false);
-					//this.preview.setVisible(false);
+					btnDone.setVisible(false);
+					btnDone.setDisable(true);
 				}
 			});
+			
+			chk.fire();
 		}
-
-
 
 
 		if(!root.getChildren().contains(test))
@@ -248,17 +253,11 @@ public class Form
 	}
 
 
-	public void setButton(Button b, VBox panel)
+	public void setButton(Button b)
 	{
 		this.b = b;
-		this.panel = panel;
 	}
+   
 	
-	public void closeWindow(Button btn) {
-		Stage stage = (Stage) btn.getScene().getWindow();
-	    stage.close();
-	   this.panel.getChildren().removeAll(b);
-	}
-
 
 }

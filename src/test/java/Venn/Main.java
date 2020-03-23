@@ -50,10 +50,15 @@ public class Main extends Application {
 
 public class Main extends Application {
 
+
+
+	public static Venn v;
+
+
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		Venn v = new Venn();
+		 v = new Venn();
 	}
 	
 	public static void main(String[] args)

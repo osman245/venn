@@ -41,7 +41,6 @@ public class Form
 	public Form()
 	{
 		startStage();
-
 	}
 
 	private void startStage() {

@@ -2,6 +2,7 @@ package Venn;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -12,13 +13,15 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class TextBox extends TitledPane
+public class TextBox extends VBox
 {
 
 	private Text t;
@@ -33,12 +36,23 @@ public class TextBox extends TitledPane
 
 	public TextBox(String text)
 	{
-
 		//p = new VBox();
 		super();
+		HBox topRow = new HBox();
+		topRow.setPadding(new Insets(5,15,5,0));
+		topRow.setAlignment(Pos.CENTER);
+		topRow.setPrefHeight(30);
+		
+		Circle c = new Circle(7);
+		c.setStyle("-fx-fill:black; -fx-border-color:black");
+		
+		Button btnExpand = new Button();
+		btnExpand.setPrefSize(20, 20);
+		btnExpand.setGraphic(c);
+		btnExpand.setStyle("-fx-background-color: transparent");
+		btnExpand.setAlignment(Pos.CENTER_LEFT);
+				
 		setAlignment(Pos.CENTER);	
-		setExpanded(false);
-		setAnimated(true);
 		setPrefWidth(100);
 
 		t = new Text();
@@ -50,14 +64,36 @@ public class TextBox extends TitledPane
 		TextField field = new TextField();
 		field.setPrefSize(100,150);
 		field.setAlignment(Pos.TOP_LEFT);
+		field.setDisable(true);
+		field.setVisible(false);
 		
-		setStyle("-fx-border-color: blue;");
-		setGraphic(t);
-		setContent(field);
+		topRow.getChildren().addAll(btnExpand, t);
+		getChildren().addAll(topRow, field);
+		
+		topRow.setStyle("-fx-background-color: green; -fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5");
 
 		setOnMouseDragged(e->move(e));
 		setOnMouseClicked(e->mouseClickEvent(e));
+		btnExpand.setOnAction(e-> expand(field,c));
 
+	}
+
+	private void expand(TextField field, Circle c) 
+	{
+		if (field.isVisible())
+		{
+			//close
+			field.setDisable(true);
+			field.setVisible(false);
+			c.setStyle("-fx-fill:black; -fx-border-color:black");
+		}
+		else
+		{
+			//open
+			field.setDisable(!true);
+			field.setVisible(!false);
+			c.setStyle("-fx-fill:white; -fx-border-color:black");
+		}
 	}
 
 	private void mouseClickEvent(MouseEvent e)
@@ -97,8 +133,7 @@ public class TextBox extends TitledPane
 				 */
 
 				root.getChildren().remove(getNode());						
-
-
+				
 			});
 
 			Optional<String> result = (dialog).showAndWait();
@@ -125,7 +160,6 @@ public class TextBox extends TitledPane
 		{
 			setXpos(getX()+e.getX()-getPrefWidth()/2);
 			setYpos(getY()+e.getY()-getPrefHeight()/2);
-			setExpanded(false);
 		}
 	}
 

@@ -57,7 +57,6 @@ public class Venn extends Stage
 		this.setMaximized(true);
 		this.setResizable(false);
 
-
 		this.setOnCloseRequest(e->{
 
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -100,6 +99,7 @@ public class Venn extends Stage
 		Text txtInit = new Text("Create a new Venn Diagram");
 		txtInit.setFontSmoothingType(FontSmoothingType.GRAY);
 		txtInit.setStyle("-fx-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;");
+		
 
 		init = new Button();
 		init.setGraphic(txtInit);
@@ -345,7 +345,6 @@ public class Venn extends Stage
 		}
 		else if (code.equals("111"))
 		{	
-
 			//bottom left
 			Circle c1 = new Circle(maxW/7);
 			c1.setStyle("-fx-fill: #5b9ad5");
@@ -396,8 +395,7 @@ public class Venn extends Stage
 		{
 			//-fx-border-color: #8f7a66
 			if(!inputs[i].isEmpty() && inputs[i].trim().length()>0)
-			{
-									
+			{							
 				TextBox tb = new TextBox();
 				//tb.setSize(100, 30);
 				//tb.setPrefWidth(100);
@@ -405,14 +403,12 @@ public class Venn extends Stage
 				//tb.setContainerStyle("-fx-background-color: green;");
 				tb.setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;" );
 				tb.setRoot(root);					
-				tb.setXpos(maxW-tb.getPrefWidth()-40);
+				tb.setXpos(maxW-tb.getPrefWidth()-80);
 				tb.setYpos(tb.getPrefHeight()*c);
 							
 				c++;					
 				
 				root.getChildren().add(tb);
-				
-
 			}
 		}
 		

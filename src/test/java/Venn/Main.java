@@ -11,6 +11,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception
 	{
 		 v = new Venn();
+		 CustomizationWindow c = new CustomizationWindow(new TextBox());
 	}
 	
 	public static void main(String[] args)

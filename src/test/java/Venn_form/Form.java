@@ -1,5 +1,6 @@
 package Venn_form;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,7 +152,12 @@ public class Form
 		btnDone.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold; -fx-background-color: #8f7a66;");
 		btnDone.setOnAction(e->{
 			
-			Main.v.init(codeTxt);
+			try {
+				Main.v.init(codeTxt);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			s.close();
 		});
 		

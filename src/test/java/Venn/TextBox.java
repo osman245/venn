@@ -1,6 +1,7 @@
 package Venn;
 import java.util.Optional;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,6 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
@@ -27,6 +31,8 @@ public class TextBox extends VBox
 	private Text t;
 	//	private VBox p;
 	private Pane root;
+	private TextArea field;
+	private HBox  topRow;
 
 
 	public TextBox()
@@ -38,69 +44,76 @@ public class TextBox extends VBox
 	{
 		//p = new VBox();
 		super();
-		HBox topRow = new HBox();
-		topRow.setPadding(new Insets(5,15,5,0));
+		topRow = new HBox();
+		topRow.setPadding(new Insets(5,15,5,5));
 		topRow.setAlignment(Pos.CENTER);
 		topRow.setPrefHeight(30);
-		
-		Circle c = new Circle(7);
-		c.setStyle("-fx-fill:black; -fx-border-color:black");
-		
-		Button btnExpand = new Button();
-		btnExpand.setPrefSize(20, 20);
-		btnExpand.setGraphic(c);
-		btnExpand.setStyle("-fx-background-color: transparent");
-		btnExpand.setAlignment(Pos.CENTER_LEFT);
 				
 		setAlignment(Pos.CENTER);	
-		setPrefWidth(100);
+		setPrefWidth(150);
 
 		t = new Text();
 		t.setText(text);
 	//	t.setWrappingWidth(100);
 		t.setTextAlignment(TextAlignment.CENTER);
 		t.setFontSmoothingType(FontSmoothingType.GRAY);	
-
-		TextField field = new TextField();
+		t.setTextAlignment(TextAlignment.CENTER);
+		
+		topRow.getChildren().add(t);
+		
+		field = new TextArea();
 		field.setPrefSize(100,150);
-		field.setAlignment(Pos.TOP_LEFT);
+		//field.setAlignment(Pos.TOP_LEFT);
 		field.setDisable(true);
 		field.setVisible(false);
+		field.setWrapText(true);
 		
-		topRow.getChildren().addAll(btnExpand, t);
+		setDefaultStyle();
+			
 		getChildren().addAll(topRow, field);
-		
-		topRow.setStyle("-fx-background-color: green; -fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5");
-
+				
 		setOnMouseDragged(e->move(e));
 		setOnMouseClicked(e->mouseClickEvent(e));
-		btnExpand.setOnAction(e-> expand(field,c));
-
+		
 	}
 
-	private void expand(TextField field, Circle c) 
+	private void setDefaultStyle() 
+	{	
+		String bgStyle = "-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-background-color: "+"transparent"+"; -fx-border-color: "+"black"+"; -fx-border-width:"+1+";";
+		String txtStyle = "-fx-font-family: "+"Arial"+"; -fx-underline: "+"false"+";-fx-font-size: "+15+"; -fx-font-weight: "+"normal"+"; -fx-fill: "+"black"+"; -fx-font-style: "+ "normal"+";";
+		String fieldStyle ="-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-font-family: "+"Arial"+"; -fx-text-fill: "+"black"+"; -fx-border-color: "+"black"+"; -fx-font-size: "+15+";";
+		
+		getTextObj().setStyle(txtStyle);
+		getPane().setStyle(bgStyle);
+		getTextField().setStyle(fieldStyle);
+		
+		
+	}
+
+	private void expand() 
 	{
 		if (field.isVisible())
 		{
 			//close
 			field.setDisable(true);
 			field.setVisible(false);
-			c.setStyle("-fx-fill:black; -fx-border-color:black");
 		}
 		else
 		{
 			//open
 			field.setDisable(!true);
 			field.setVisible(!false);
-			c.setStyle("-fx-fill:white; -fx-border-color:black");
 		}
 	}
 
 	private void mouseClickEvent(MouseEvent e)
 	{
 
-		/*(e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || */
-		if(  e.getButton().equals(MouseButton.SECONDARY))
+		if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) 
+		{
+			expand();
+		}
+		else if(  e.getButton().equals(MouseButton.SECONDARY))
 		{
 			TextInputDialog dialog = new TextInputDialog();
 			dialog.setTitle("Set Text");
@@ -108,9 +121,10 @@ public class TextBox extends VBox
 			dialog.setContentText("");
 			dialog.getDialogPane().getButtonTypes().clear();
 
-			ButtonType delete = new ButtonType("delete");
+			ButtonType delete = new ButtonType("Delete");
+			ButtonType customize = new ButtonType("Customize");
 
-			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete );
+			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete,customize);
 
 
 			Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
@@ -135,6 +149,10 @@ public class TextBox extends VBox
 				root.getChildren().remove(getNode());						
 				
 			});
+			
+			
+			Button btnCustom = (Button)dialog.getDialogPane().lookupButton(customize);
+			btnCustom.addEventFilter(ActionEvent.ACTION, event -> { new CustomizationWindow(this); });
 
 			Optional<String> result = (dialog).showAndWait();
 
@@ -146,6 +164,8 @@ public class TextBox extends VBox
 			}
 
 		}
+		
+		
 
 		/*
 		 * if(e.getButton().equals(MouseButton.PRIMARY)) { if(isExpanded())
@@ -153,7 +173,16 @@ public class TextBox extends VBox
 		 */
 	}
 
-
+	public Text getTextObj()
+	{
+		return t;
+	}
+	
+	public Node getTextField()
+	{
+		return field;
+	}
+	
 	private void move(MouseEvent e) 
 	{
 		if( e.getButton().equals(MouseButton.PRIMARY))
@@ -166,6 +195,11 @@ public class TextBox extends VBox
 	public Node getNode()
 	{
 		return this;
+	}
+	
+	public Pane getPane()
+	{
+		return topRow;
 	}
 	public void setTitleText(String text)
 	{

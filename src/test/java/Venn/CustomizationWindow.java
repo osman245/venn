@@ -1,8 +1,10 @@
 package Venn;
 
+import java.awt.Event;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,6 +29,11 @@ import javafx.stage.Stage;
 public class CustomizationWindow 
 {
 	private Node n;
+	private String bgStyle, fieldStyle, txtStyle;
+	private String txtColour, txtFontSize, txtFont, txtBold, txtUnderLine, txtItalic, txtBGCol, txtBrCol, fieldFont, fieldTxtCol, fieldBrCol, fieldFontSize, txtBrWidth;
+	private Stage s;
+	private TextBox tbPreview;
+
 	public CustomizationWindow(Node e)
 	{
 		StartStage();
@@ -34,7 +42,7 @@ public class CustomizationWindow
 
 	private void StartStage()
 	{
-		Stage s = new Stage();
+		s = new Stage();
 		s.setTitle("Customization window");	
 
 		s.setOnCloseRequest(e->{
@@ -81,8 +89,26 @@ public class CustomizationWindow
 			 * 9. border colour
 			 */
 
+			//default style will update for each set on action
+			txtColour = "black";
+			txtFontSize = "12";
+			txtFont = "Arial";
+			txtBold = "normal";
+			txtUnderLine = "false";
+			txtItalic = "normal";
+			txtBGCol= "transparent";
+			txtBrCol= "black";
+			fieldFont = "Arial";
+			fieldTxtCol = "black";
+			fieldBrCol = "black";
+			fieldFontSize = "10";
+
+			bgStyle = "-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-background-color: "+txtBGCol+"; -fx-border-color: "+txtBrCol+";";
+			txtStyle = "-fx-font: "+txtFont+"; -fx-underline: "+txtUnderLine+";-fx-font-size: "+txtFontSize+"; -fx-font-weight: "+txtBold+"; -fx-fill: "+txtColour+"; -fx-font-style: "+txtItalic+";";
+			fieldStyle = "-fx-font: "+fieldFont+"; -fx-text-fill: "+fieldTxtCol+"; -fx-border-color: "+fieldBrCol+"; -fx-font-size: "+fieldFontSize+";";
+
 			GridPane root = new GridPane();
-			root.setPrefSize(400, 700);
+			root.setPrefSize(400, 750);
 			root.setPadding(new Insets(20,15,20,15));
 			root.setAlignment(Pos.TOP_CENTER);
 			root.setHgap(20);
@@ -101,6 +127,8 @@ public class CustomizationWindow
 
 			ColorPicker txtCol = new ColorPicker(Color.BLACK);
 			txtCol.setPrefWidth(150);
+			txtCol.setOnAction(e->{txtColour = "#"+ txtCol.getValue().toString().substring(2); updateStyle(); });
+			
 
 			Label lblFont = new Label("Font:");
 			lblFont.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
@@ -110,33 +138,38 @@ public class CustomizationWindow
 			cboFonts.getItems().addAll(fonts);
 			cboFonts.setPrefWidth(150);
 			cboFonts.setPromptText("Arial");
+			cboFonts.setOnAction(e->{txtFont = cboFonts.getValue(); updateStyle(); });
 
 			Label lblTxtSize = new Label("Font Size:");
 			lblTxtSize.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 
-			Spinner<Integer> sizeSpinner = new Spinner<Integer>(1,100,12);
+			Spinner<Integer> sizeSpinner = new Spinner<Integer>(1,25,12);
 			sizeSpinner.setEditable(false);
 			sizeSpinner.setPrefWidth(150);
-			
+			sizeSpinner.setOnMouseClicked(e-> {txtFontSize = ""+sizeSpinner.getValue(); updateStyle();});
+
 			CheckBox chkBold = new CheckBox("Bold");
 			chkBold.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			chkBold.setPrefWidth(400/3);
+			chkBold.setOnAction(e->{txtBold = !chkBold.isSelected()?"normal":"bold"; updateStyle(); });
 
 			CheckBox chkItalic= new CheckBox("Italic");
 			chkItalic.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			chkItalic.setPrefWidth(400/3);
+			chkItalic.setOnAction(e->{txtItalic= !chkItalic.isSelected()?"normal":"italic"; updateStyle(); });
 
 			CheckBox chkUnderLine = new CheckBox("Underline");
 			chkUnderLine.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			chkUnderLine.setPrefWidth(400/2.65);
-			
+			chkUnderLine.setOnAction(e->{txtUnderLine = !chkUnderLine.isSelected()?"false":"true"; updateStyle(); });
+
 			HBox checkBoxes = new HBox();
 			checkBoxes.setPrefWidth(root.getPrefWidth());
 			//checkBoxes.setSpacing(40);
 			//checkBoxes.setPadding(new Insets(0, 0, 0, 0));
 			checkBoxes.setAlignment(Pos.CENTER);
 			checkBoxes.getChildren().addAll(chkBold, chkItalic, chkUnderLine);		
-		
+
 			//background label controls	
 			Label lblBgCol = new Label("Background Col.:");
 			lblBgCol.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
@@ -144,34 +177,38 @@ public class CustomizationWindow
 
 			ColorPicker bgCol = new ColorPicker(Color.TRANSPARENT);
 			bgCol.setPrefWidth(150);
-			
+			bgCol.setOnAction(e->{txtBGCol = "#"+bgCol.getValue().toString().substring(2);  updateStyle();});
+
 			Label lblBrCol = new Label("Border Colour:");
 			lblBrCol.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			lblBrCol.setPrefWidth(150);
 
 			ColorPicker brCol = new ColorPicker(Color.BLACK);
 			brCol.setPrefWidth(150);
-			
-			Label lblBrSize = new Label("Border Size:");
+			brCol.setOnAction(e->{txtBrCol = "#"+brCol.getValue().toString().substring(2); updateStyle(); });
+
+			Label lblBrSize = new Label("Border Thickness:");
 			lblBrSize.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 
-			Spinner<Integer> brSizeSpinner = new Spinner<Integer>(1,5,12);
+			Spinner<Integer> brSizeSpinner = new Spinner<Integer>(1,20,1);
 			brSizeSpinner.setEditable(false);
 			brSizeSpinner.setPrefWidth(150);
-			
+			brSizeSpinner.setOnMouseClicked(e->{txtBrWidth = ""+brSizeSpinner.getValue(); updateStyle();  });
+
 			//text field customizations
 			Label lblField = new Label("Text Field customizations");
 			lblField.setPrefWidth(root.getPrefWidth());
 			lblField.setAlignment(Pos.CENTER);
 			lblField.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px; -fx-font-weight:bold;");
-			
-			Label lblFieldCol = new Label("Border Colour:");
+
+			Label lblFieldCol = new Label("Text Colour:");
 			lblFieldCol.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 			lblFieldCol.setPrefWidth(150);
 
 			ColorPicker Fieldcol = new ColorPicker(Color.BLACK);
 			Fieldcol.setPrefWidth(150);
-			
+			Fieldcol.setOnAction(e->{fieldTxtCol = "#"+Fieldcol.getValue().toString().substring(2); updateStyle();});
+
 			Label lblFieldFont = new Label("Font:");
 			lblFieldFont.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 
@@ -179,19 +216,31 @@ public class CustomizationWindow
 			cboFieldFonts.getItems().addAll(fonts);
 			cboFieldFonts.setPrefWidth(150);
 			cboFieldFonts.setPromptText("Arial");
-			
+			cboFieldFonts.setOnAction(e->{fieldFont = cboFieldFonts.getValue(); updateStyle();});
+
 			Label lblFieldTxtSize = new Label("Font Size:");
 			lblFieldTxtSize.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 
 			Spinner<Integer> fieldSizeSpinner = new Spinner<Integer>(1,20,12);
 			fieldSizeSpinner.setEditable(false);
-			fieldSizeSpinner.setPrefWidth(150);	
-			
+			fieldSizeSpinner.setPrefWidth(150);
+			fieldSizeSpinner.setOnMouseClicked(e-> {fieldFontSize = ""+fieldSizeSpinner.getValue(); updateStyle();});
+
 			//preview 
 			Label lblPreview = new Label("Preview");
 			lblPreview.setPrefWidth(root.getPrefWidth());
 			lblPreview.setAlignment(Pos.CENTER);
 			lblPreview.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px; -fx-font-weight:bold;");
+			
+			tbPreview = new TextBox();
+			tbPreview.setTitleText("abdcefghijklmnopqrstuvwxyz");
+			updateStyle();
+			
+			Button btnDone = new Button("Done");
+			btnDone.setStyle("-fx-background-color: #8f7a66; -fx-font-size:15px;-fx-font-color:white; -fx-font-weight:bold;");
+			btnDone.setAlignment(Pos.CENTER);
+			btnDone.setPrefWidth(125);
+			btnDone.setOnAction(e->updateNodeStyle());
 			
 			//adding the controls for 
 			root.add(lblTxtBox, 0, 0, 3, 1);
@@ -216,6 +265,8 @@ public class CustomizationWindow
 			root.add(lblFieldTxtSize, 0, 11, 1, 1);
 			root.add(fieldSizeSpinner, 1, 11, 1, 1);
 			root.add(lblPreview, 0,12,3,1);
+			root.add(tbPreview, 0,13,3,1);
+			root.add(btnDone, 1, 14,2,1);
 
 			Scene scene = new Scene(root);
 			root.setStyle("-fx-background-color:#faf8ef;");
@@ -224,5 +275,29 @@ public class CustomizationWindow
 			s.show();
 
 		}
+
+
+	}
+	private void updateNodeStyle() {
+		updateStyle();
+		
+		TextBox t = (TextBox)n;
+		t.getTextObj().setStyle(txtStyle);
+		t.getPane().setStyle(bgStyle);
+		t.getTextField().setStyle(fieldStyle);
+		
+		s.close();
+		
+	}
+
+	private void updateStyle()
+	{
+		bgStyle = "-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-background-color: "+txtBGCol+"; -fx-border-color: "+txtBrCol+"; -fx-border-width:"+txtBrWidth+";";
+		txtStyle = "-fx-font-family: "+txtFont+"; -fx-underline: "+txtUnderLine+";-fx-font-size: "+txtFontSize+"; -fx-font-weight: "+txtBold+"; -fx-fill: "+txtColour+"; -fx-font-style: "+txtItalic+";";
+		fieldStyle ="-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-font-family: "+fieldFont+"; -fx-text-fill: "+fieldTxtCol+"; -fx-border-color: "+fieldBrCol+"; -fx-font-size: "+fieldFontSize+";";
+		
+		tbPreview.getTextObj().setStyle(txtStyle);
+		tbPreview.getPane().setStyle(bgStyle);
+		tbPreview.getTextField().setStyle(fieldStyle);
 	}
 }

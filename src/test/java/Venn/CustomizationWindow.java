@@ -234,6 +234,7 @@ public class CustomizationWindow
 			
 			tbPreview = new TextBox();
 			tbPreview.setTitleText("abdcefghijklmnopqrstuvwxyz");
+			tbPreview.setPreview(true);
 			updateStyle();
 			
 			Button btnDone = new Button("Done");

@@ -1,5 +1,7 @@
 package Venn;
 
+import java.awt.Event;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import Venn_form.Form;
@@ -17,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -43,6 +46,7 @@ public class Venn extends Stage
 	private double maxH, maxW;
 	private int txtCount =0;
 	private Scene scene;
+	private ArrayList<TextBox> textBoxes;
 
 
 	public Venn()
@@ -99,7 +103,7 @@ public class Venn extends Stage
 		Text txtInit = new Text("Create a new Venn Diagram");
 		txtInit.setFontSmoothingType(FontSmoothingType.GRAY);
 		txtInit.setStyle("-fx-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;");
-		
+
 
 		init = new Button();
 		init.setGraphic(txtInit);
@@ -136,29 +140,30 @@ public class Venn extends Stage
 		//init.setVisible(false);
 		root.getChildren().clear();
 
-		//clicking this will parse a ttext area and every new line will create a new text field
-		Button add = new Button("add text boxes");
-		add.setPrefSize(200, 40);
-		add.setLayoutX(maxW-add.getPrefWidth()-15);
-		add.setLayoutY(maxH-add.getPrefHeight());
-		add.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
+		//clicking this will parse a text area and every new line will create a new text field
+		/*
+		 * Button add = new Button("add text boxes"); add.setPrefSize(200, 40);
+		 * add.setLayoutX(maxW-add.getPrefWidth()-15);
+		 * add.setLayoutY(maxH-add.getPrefHeight()); add.
+		 * setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66"
+		 * );
+		 * 
+		 * TextArea ta = new TextArea(); ta.setPrefSize(200, maxH/2);
+		 * ta.setLayoutX(maxW-ta.getPrefWidth()-15);
+		 * ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20); ta.
+		 * setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66"
+		 * ); ta.setWrapText(true);
+		 * 
+		 * add.setOnAction(e->addTextBox(ta));
+		 */	
 
-		TextArea ta = new TextArea();
-		ta.setPrefSize(200, maxH/2);
-		ta.setLayoutX(maxW-ta.getPrefWidth()-15);
-		ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20);
-		ta.setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
-		ta.setWrapText(true);
+		createTextBoxAdder();
 
-		add.setOnAction(e->addTextBox(ta));
-		
-		//adding the colour choosers
-	
-				
+		//adding the colour choosers				
 		ColorPicker cp1 = new ColorPicker(/*Color.rgb(255,191,0)*/);
 		ColorPicker cp2 = new ColorPicker(/*Color.rgb(91,154,213)*/);
 		ColorPicker cp3 = new ColorPicker(/*Color.rgb(48,232,69)*/);
-		
+
 		Label set1 = new Label("set1");
 		set1.setPrefSize(100, 40);
 		set1.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
@@ -171,54 +176,57 @@ public class Venn extends Stage
 		set3.setPrefSize(100, 40);
 		set3.setStyle("-fx-font-family: Clear Sans; -fx-font-size: 18px;");
 		set3.setAlignment(Pos.CENTER_RIGHT);
-		
+
 		if(code.length() == 1)
 		{		
 			cp1.setPrefSize(200, 40);
 			cp2.setPrefSize(200, 40);
-			
-			cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
-			cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
-			
+
+			//cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
+			//cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
+
 			set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
 			set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
-			
+
 			cp2.setLayoutY(maxH-cp1.getPrefHeight());
 			cp1.setLayoutY(maxH-cp2.getPrefHeight()*2);
-			
+
 			set2.setLayoutY(cp2.getLayoutY());
 			set1.setLayoutY(cp1.getLayoutY());
-						
+
 			root.getChildren().addAll(cp1, cp2,set1,set2);
-			
+
 		}
 		else
 		{			
 			cp1.setPrefSize(200, 40);
 			cp2.setPrefSize(200, 40);
 			cp3.setPrefSize(200, 40);
-			
-			cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
-			cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
-			cp3.setLayoutX(add.getLayoutX()-15-cp3.getPrefWidth());
-			
+
+			/*
+			 * cp1.setLayoutX(add.getLayoutX()-15-cp1.getPrefWidth());
+			 * cp2.setLayoutX(add.getLayoutX()-15-cp2.getPrefWidth());
+			 * cp3.setLayoutX(add.getLayoutX()-15-cp3.getPrefWidth());
+			 */
+
 			set1.setLayoutX(cp1.getLayoutX()-set1.getPrefWidth()-10);
 			set2.setLayoutX(cp2.getLayoutX()-set2.getPrefWidth()-10);
 			set3.setLayoutX(cp3.getLayoutX()-set3.getPrefWidth()-10);
-			
+
 			cp3.setLayoutY(maxH-cp1.getPrefHeight());
 			cp2.setLayoutY(maxH-cp2.getPrefHeight()*2);
 			cp1.setLayoutY(maxH-cp3.getPrefHeight()*3);
-			
+
 			set1.setLayoutY(cp1.getLayoutY());
 			set2.setLayoutY(cp2.getLayoutY());
 			set3.setLayoutY(cp3.getLayoutY());
-						
+
 			root.getChildren().addAll(cp1, cp2, cp3,set1,set2,set3);
 		}
-		
-		root.getChildren().add(add);
-		root.getChildren().add(ta);
+
+		/*
+		 * root.getChildren().add(add); root.getChildren().add(ta);
+		 */
 
 		//check the code and add the correct amount of circles accordingly 
 		/*
@@ -232,10 +240,10 @@ public class Venn extends Stage
 		 * circle 3: #30e845
 		 * 
 		 */
-		
+
 		//setting up the event handlers 
-		
-		
+
+
 
 		//adding the circles to the scene here
 		if(code.equals("1"))
@@ -251,7 +259,7 @@ public class Venn extends Stage
 			c2.setOpacity(0.5);
 			c2.setLayoutX(maxW/2);
 			c2.setLayoutY(maxH/2);
-			
+
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 
@@ -281,7 +289,7 @@ public class Venn extends Stage
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
-			
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
@@ -309,7 +317,7 @@ public class Venn extends Stage
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
-			
+
 			root.getChildren().add(c1);
 			root.getChildren().add(c2);
 			root.getChildren().add(c3);
@@ -334,7 +342,7 @@ public class Venn extends Stage
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/1.85);
 			c3.setLayoutY(maxH/2);		
-			
+
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
@@ -365,7 +373,7 @@ public class Venn extends Stage
 			c3.setOpacity(0.5);
 			c3.setLayoutX(maxW/3.225);
 			c3.setLayoutY(maxH/2.75);
-			
+
 			cp1.setOnAction(e->changeCol(cp1.getValue(), c1));
 			cp2.setOnAction(e->changeCol(cp2.getValue(), c2));
 			cp3.setOnAction(e->changeCol(cp3.getValue(), c3));
@@ -376,21 +384,99 @@ public class Venn extends Stage
 		}		
 
 	}
-	
-	
+
+
+	private void createTextBoxAdder()
+	{
+		VBox container = new VBox();
+		container.setPrefWidth(170);
+		container.setPrefHeight(maxH);
+		container.setAlignment(Pos.CENTER);
+		container.setLayoutX(maxW-200);
+
+		//init the array list
+		VBox tbPane = new VBox();
+		tbPane.setSpacing(-140);
+
+		textBoxes = new ArrayList<TextBox>();
+
+		// scroll pane
+		ScrollPane sp = new ScrollPane();
+		sp.setPrefSize(180, maxH-100);
+		//sp.setPannable(true);
+		sp.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+		sp.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+		//text field
+		TextField tf = new TextField();
+		tf.setPrefSize(170, 40);
+		tf.setStyle("-fx-font-family: arial; -fx-font-size: 16; ");
+		tf.setAlignment(Pos.CENTER);
+
+
+		sp.setContent(tbPane);
+
+
+		container.getChildren().add(tf);
+		container.getChildren().add(sp);
+		//container.getChildren().add(tbPane);
+		root.getChildren().add(container);
+
+
+		tf.setOnAction(e-> 
+		{
+			//add to the scroll pane storing the text boxes 
+			if(!tf.getText().trim().isEmpty())
+			{
+				TextBox t = new TextBox(tf.getText());
+				t.setExpand(false);
+				//t.setManaged(false);
+				t.setOnMousePressed(event->{
+					if(tbPane.getChildren().contains(t))
+					{
+						tbPane.getChildren().remove(t);
+						root.getChildren().add(t);
+						t.setExpand(true);	
+
+						t.setXpos(event.getSceneX()-t.getPrefWidth()/2);
+						t.setYpos(event.getSceneY()-t.getPrefHeight()/2);
+					}
+				
+				});
+				
+				t.setOnMouseDragged(event->{
+					t.setXpos(event.getSceneX()-t.getPrefWidth()/2);
+					t.setYpos(event.getSceneY()-t.getPrefHeight()/2);
+				});
+
+				t.setOnMouseClicked(event -> t.mouseClickEvent(event, t));
+				
+				textBoxes.add(t);
+				//tbPane.getChildren().add(t);
+				tbPane.getChildren().add(t);
+				//t.setManaged(false);
+
+				tf.clear();
+			}
+		});
+
+
+
+
+	}
 
 	private void changeCol(Color col, Circle c)
 	{
 		c.setFill(col);
 	}
-	
-	
+
+
 	private void addTextBox(TextArea t)
 	{
 
 		String[] inputs = t.getText().split("\n");
 		int c=0;
-		
+
 		for(int i=0; i< inputs.length; i++)
 		{
 			//-fx-border-color: #8f7a66
@@ -405,13 +491,13 @@ public class Venn extends Stage
 				tb.setRoot(root);					
 				tb.setXpos(maxW-tb.getPrefWidth()-80);
 				tb.setYpos(tb.getPrefHeight()*c);
-							
+
 				c++;					
-				
+
 				root.getChildren().add(tb);
 			}
 		}
-		
+
 		//clear the text area
 		t.clear();
 

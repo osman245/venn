@@ -33,6 +33,8 @@ public class TextBox extends VBox
 	private Pane root;
 	private TextArea field;
 	private HBox  topRow;
+	private boolean isPreview;
+	private boolean expandable;
 
 
 	public TextBox()
@@ -48,33 +50,35 @@ public class TextBox extends VBox
 		topRow.setPadding(new Insets(5,15,5,5));
 		topRow.setAlignment(Pos.CENTER);
 		topRow.setPrefHeight(30);
-				
+
 		setAlignment(Pos.CENTER);	
 		setPrefWidth(150);
 
 		t = new Text();
 		t.setText(text);
-	//	t.setWrappingWidth(100);
+		//	t.setWrappingWidth(100);
 		t.setTextAlignment(TextAlignment.CENTER);
 		t.setFontSmoothingType(FontSmoothingType.GRAY);	
 		t.setTextAlignment(TextAlignment.CENTER);
-		
+
 		topRow.getChildren().add(t);
-		
+
 		field = new TextArea();
 		field.setPrefSize(100,150);
 		//field.setAlignment(Pos.TOP_LEFT);
 		field.setDisable(true);
 		field.setVisible(false);
 		field.setWrapText(true);
-		
+
 		setDefaultStyle();
-			
+		isPreview = false;
+		expandable = true;
+
 		getChildren().addAll(topRow, field);
-				
-		setOnMouseDragged(e->move(e));
-		setOnMouseClicked(e->mouseClickEvent(e));
-		
+
+	//	setOnMouseDragged(e->move(e));
+		//setOnMouseClicked(e->mouseClickEvent(e));
+
 	}
 
 	private void setDefaultStyle() 
@@ -82,38 +86,49 @@ public class TextBox extends VBox
 		String bgStyle = "-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-background-color: "+"transparent"+"; -fx-border-color: "+"black"+"; -fx-border-width:"+1+";";
 		String txtStyle = "-fx-font-family: "+"Arial"+"; -fx-underline: "+"false"+";-fx-font-size: "+15+"; -fx-font-weight: "+"normal"+"; -fx-fill: "+"black"+"; -fx-font-style: "+ "normal"+";";
 		String fieldStyle ="-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-font-family: "+"Arial"+"; -fx-text-fill: "+"black"+"; -fx-border-color: "+"black"+"; -fx-font-size: "+15+";";
-		
+
 		getTextObj().setStyle(txtStyle);
 		getPane().setStyle(bgStyle);
 		getTextField().setStyle(fieldStyle);
-		
-		
 	}
 
 	private void expand() 
 	{
-		if (field.isVisible())
+		if(expandable)
 		{
-			//close
-			field.setDisable(true);
-			field.setVisible(false);
-		}
-		else
-		{
-			//open
-			field.setDisable(!true);
-			field.setVisible(!false);
+			if (field.isVisible())
+			{
+				//close
+				field.setDisable(true);
+				field.setVisible(false);
+			}
+			else
+			{
+				//open
+				field.setDisable(!true);
+				field.setVisible(!false);
+			}
 		}
 	}
 
-	private void mouseClickEvent(MouseEvent e)
+	public void setExpand(boolean expand)
+	{
+		this.expandable = expand;
+	}
+
+	public boolean getExpand()
+	{
+		return expandable;
+	}
+
+	public void mouseClickEvent(MouseEvent e, TextBox t)
 	{
 
 		if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) 
 		{
 			expand();
 		}
-		else if(  e.getButton().equals(MouseButton.SECONDARY))
+		else if(  e.getButton().equals(MouseButton.SECONDARY) && !isPreview)
 		{
 			TextInputDialog dialog = new TextInputDialog();
 			dialog.setTitle("Set Text");
@@ -146,11 +161,11 @@ public class TextBox extends VBox
 				 * }
 				 */
 
-				root.getChildren().remove(getNode());						
-				
+				root.getChildren().remove(t);						
+
 			});
-			
-			
+
+
 			Button btnCustom = (Button)dialog.getDialogPane().lookupButton(customize);
 			btnCustom.addEventFilter(ActionEvent.ACTION, event -> { new CustomizationWindow(this); });
 
@@ -160,12 +175,12 @@ public class TextBox extends VBox
 			{
 				if(result.get().length()==0)
 					root.getChildren().remove(getNode());
-				t.setText(result.get());
+				t.setTitleText(result.get());
 			}
 
 		}
-		
-		
+
+
 
 		/*
 		 * if(e.getButton().equals(MouseButton.PRIMARY)) { if(isExpanded())
@@ -177,16 +192,24 @@ public class TextBox extends VBox
 	{
 		return t;
 	}
-	
+
 	public Node getTextField()
 	{
 		return field;
 	}
-	
+
 	private void move(MouseEvent e) 
 	{
 		if( e.getButton().equals(MouseButton.PRIMARY))
 		{
+			/*
+			 * if(this.getParent() instanceof VBox) { TextBox t = this;
+			 * root.getChildren().add(t); this.setLayoutX(this.getLayoutX());
+			 * this.setLayoutY(this.getLayoutY());
+			 * 
+			 * ((VBox)(this.getParent())).getChildren().remove(t); }
+			 */
+						
 			setXpos(getX()+e.getX()-getPrefWidth()/2);
 			setYpos(getY()+e.getY()-getPrefHeight()/2);
 		}
@@ -196,7 +219,7 @@ public class TextBox extends VBox
 	{
 		return this;
 	}
-	
+
 	public Pane getPane()
 	{
 		return topRow;
@@ -240,6 +263,14 @@ public class TextBox extends VBox
 	public double getY() 
 	{
 		return getLayoutY();
+	}
+
+	public boolean isPreview() {
+		return isPreview;
+	}
+
+	public void setPreview(boolean isPreview) {
+		this.isPreview = isPreview;
 	}
 
 

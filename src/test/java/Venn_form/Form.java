@@ -229,7 +229,7 @@ public class Form
 					this.i.setImage(new Image("/venn_pics/venn"+codeTxt+".png"));
 					btnDone.setVisible(true);
 					btnDone.setDisable(false);
-					System.out.println(codeTxt);
+					//System.out.println(codeTxt);
 				}
 				else
 				{

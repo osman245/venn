@@ -44,7 +44,6 @@ public class Venn extends Stage
 	private String code;
 	private Pane root;
 	private double maxH, maxW;
-	private int txtCount =0;
 	private Scene scene;
 	private ArrayList<TextBox> textBoxes;
 
@@ -95,7 +94,6 @@ public class Venn extends Stage
 		maxW = bounds.getMaxX();
 
 		//	System.out.println(maxW);
-
 		scene = new Scene(root);
 		root.setStyle("-fx-background-color:#faf8ef;");
 
@@ -103,7 +101,6 @@ public class Venn extends Stage
 		Text txtInit = new Text("Create a new Venn Diagram");
 		txtInit.setFontSmoothingType(FontSmoothingType.GRAY);
 		txtInit.setStyle("-fx-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;");
-
 
 		init = new Button();
 		init.setGraphic(txtInit);
@@ -413,15 +410,12 @@ public class Venn extends Stage
 		tf.setStyle("-fx-font-family: arial; -fx-font-size: 16; ");
 		tf.setAlignment(Pos.CENTER);
 
-
 		sp.setContent(tbPane);
-
 
 		container.getChildren().add(tf);
 		container.getChildren().add(sp);
 		//container.getChildren().add(tbPane);
 		root.getChildren().add(container);
-
 
 		tf.setOnAction(e-> 
 		{
@@ -460,50 +454,11 @@ public class Venn extends Stage
 			}
 		});
 
-
-
-
 	}
 
 	private void changeCol(Color col, Circle c)
 	{
 		c.setFill(col);
-	}
-
-
-	private void addTextBox(TextArea t)
-	{
-
-		String[] inputs = t.getText().split("\n");
-		int c=0;
-
-		for(int i=0; i< inputs.length; i++)
-		{
-			//-fx-border-color: #8f7a66
-			if(!inputs[i].isEmpty() && inputs[i].trim().length()>0)
-			{							
-				TextBox tb = new TextBox();
-				//tb.setSize(100, 30);
-				//tb.setPrefWidth(100);
-				tb.setTitleText(inputs[i]);
-				//tb.setContainerStyle("-fx-background-color: green;");
-				//tb.setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;" );
-				tb.setRoot(root);					
-				tb.setXpos(maxW-tb.getPrefWidth()-80);
-				tb.setYpos(tb.getPrefHeight()*c);
-
-				c++;					
-
-				root.getChildren().add(tb);
-			}
-		}
-
-		//clear the text area
-		t.clear();
-
-		//add window limits so you cant drag off screen
-		//going to add right click to access options
-
 	}
 
 }

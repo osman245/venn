@@ -29,13 +29,12 @@ public class TextBox extends VBox
 {
 
 	private Text t;
-	//	private VBox p;
+	//private VBox p;
 	private Pane root;
 	private TextArea field;
 	private HBox  topRow;
 	private boolean isPreview;
 	private boolean expandable;
-
 
 	public TextBox()
 	{
@@ -76,7 +75,7 @@ public class TextBox extends VBox
 
 		getChildren().addAll(topRow, field);
 
-	//	setOnMouseDragged(e->move(e));
+		//setOnMouseDragged(e->move(e));
 		//setOnMouseClicked(e->mouseClickEvent(e));
 
 	}
@@ -198,23 +197,6 @@ public class TextBox extends VBox
 		return field;
 	}
 
-	private void move(MouseEvent e) 
-	{
-		if( e.getButton().equals(MouseButton.PRIMARY))
-		{
-			/*
-			 * if(this.getParent() instanceof VBox) { TextBox t = this;
-			 * root.getChildren().add(t); this.setLayoutX(this.getLayoutX());
-			 * this.setLayoutY(this.getLayoutY());
-			 * 
-			 * ((VBox)(this.getParent())).getChildren().remove(t); }
-			 */
-						
-			setXpos(getX()+e.getX()-getPrefWidth()/2);
-			setYpos(getY()+e.getY()-getPrefHeight()/2);
-		}
-	}
-
 	public Node getNode()
 	{
 		return this;
@@ -272,7 +254,26 @@ public class TextBox extends VBox
 	public void setPreview(boolean isPreview) {
 		this.isPreview = isPreview;
 	}
-
-
+	
+	/*
+	 * returns a string in the format of
+	 * [obj class],[title text],[field text],[text style], [pane style], [text field style], [X position], [Y position]
+	 */
+	public String toString()
+	{
+		String ans ="";
+		
+		ans += "textbox,";
+		ans += t.getText()+",";
+		ans += field.getText()+",";
+		ans += t.getStyle()+",";
+		ans += getPane().getStyle()+",";
+		ans += getTextField().getStyle()+",";
+		ans += getX()+",";
+		ans += getY() +",";
+		
+		
+		return ans;
+	}
 
 }

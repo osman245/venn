@@ -3,6 +3,7 @@ package Venn;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -28,8 +29,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -40,6 +43,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -64,6 +68,7 @@ public class Venn extends Stage
 	Label label1 = new Label();
 	Label label2 = new Label();
 	Label label3 = new Label();
+	private ArrayList<TextBox> textBoxes;
 	
 
 
@@ -78,6 +83,7 @@ public class Venn extends Stage
 
 		this.setMaximized(true);
 		this.setFullScreen(false);
+		this.setAlwaysOnTop(true);
 		
 		this.setOnCloseRequest(e->{
 
@@ -184,23 +190,29 @@ public class Venn extends Stage
 		//init.setVisible(false);
 		root.getChildren().clear();
 
-		//clicking this will parse a ttext area and every new line will create a new text field
-		Button add = new Button("add text boxes");
-		add.setPrefSize(200, 40);
-		add.setLayoutX(maxW-add.getPrefWidth()-15);
-		add.setLayoutY(maxH-add.getPrefHeight());
-		add.setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
-
-		TextArea ta = new TextArea();
-		ta.setPrefSize(200, maxH/2);
-		ta.setLayoutX(maxW-ta.getPrefWidth()-15);
-		ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20);
-		ta.setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66");
-		ta.setWrapText(true);
-
-		add.setOnAction(e->addTextBox(ta));
+		//clicking this will parse a text area and every new line will create a new text field
 		
-		root.getChildren().addAll(add,ta);
+		//obsolete code
+		/*
+		 * Button add = new Button("add text boxes"); add.setPrefSize(200, 40);
+		 * add.setLayoutX(maxW-add.getPrefWidth()-15);
+		 * add.setLayoutY(maxH-add.getPrefHeight()); add.
+		 * setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66"
+		 * );
+		 * 
+		 * TextArea ta = new TextArea(); ta.setPrefSize(200, maxH/2);
+		 * ta.setLayoutX(maxW-ta.getPrefWidth()-15);
+		 * ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20); ta.
+		 * setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66"
+		 * ); ta.setWrapText(true);
+		 * 
+		 * add.setOnAction(e->addTextBox(ta));
+		 * 
+		 * root.getChildren().addAll(add,ta);
+		 */
+		
+		// new text box adder is here
+		createTextBoxAdder();
 		
 	
 		//----------------MENU BAR---------------------------
@@ -550,6 +562,144 @@ public class Venn extends Stage
 	
 	
 	
+	private void createTextBoxAdder() 
+	{
+		// TODO Auto-generated method stub
+		VBox container = new VBox();
+		container.setPrefWidth(170);
+		container.setPrefHeight(maxH);
+		container.setAlignment(Pos.CENTER);
+		container.setLayoutX(maxW-200);
+
+		//init the array list
+		VBox tbPane = new VBox();
+		tbPane.setSpacing(-140);
+
+		textBoxes = new ArrayList<TextBox>();
+
+		// scroll pane
+		ScrollPane sp = new ScrollPane();
+		sp.setPrefSize(180, maxH-100);
+		//sp.setPannable(true);
+		sp.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+		sp.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+		//text field
+		TextField tf = new TextField();
+		tf.setPrefSize(170, 40);
+		tf.setStyle("-fx-font-family: arial; -fx-font-size: 16; ");
+		tf.setAlignment(Pos.CENTER);
+
+		sp.setContent(tbPane);
+
+		container.getChildren().add(tf);
+		container.getChildren().add(sp);
+		//container.getChildren().add(tbPane);
+		root.getChildren().add(container);
+
+		tf.setOnAction(e-> 
+		{
+			//add to the scroll pane storing the text boxes 
+			if(!tf.getText().trim().isEmpty())
+			{
+				TextBox t = new TextBox(tf.getText());
+				t.setExpand(false);
+				//t.setManaged(false);
+				t.setOnMousePressed(event->{
+					if(tbPane.getChildren().contains(t))
+					{
+						tbPane.getChildren().remove(t);
+						root.getChildren().add(t);
+						t.setExpand(true);	
+
+						t.setXpos(event.getSceneX()-t.getPrefWidth()/2);
+						t.setYpos(event.getSceneY()-t.getPrefHeight()/2);
+					}
+				
+				});
+				
+				t.setOnMouseDragged(event->{
+					t.setXpos(event.getSceneX()-t.getPrefWidth()/2);
+					t.setYpos(event.getSceneY()-t.getPrefHeight()/2);
+				});
+
+				t.setOnMouseClicked(event -> mouseClickEvent(event, t, root));
+				
+				textBoxes.add(t);
+				//tbPane.getChildren().add(t);
+				tbPane.getChildren().add(t);
+				//t.setManaged(false);
+
+				tf.clear();
+			}
+		});
+
+	}
+
+	public static void mouseClickEvent(MouseEvent e, TextBox t, Pane root)
+	{
+
+		if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) 
+		{
+			t.expand();
+		}
+		else if(  e.getButton().equals(MouseButton.SECONDARY) && !t.isPreview())
+		{
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Set Text");
+			dialog.setHeaderText(null);
+			dialog.setContentText("");
+			dialog.getDialogPane().getButtonTypes().clear();
+
+			ButtonType delete = new ButtonType("Delete");
+			ButtonType customize = new ButtonType("Customize");
+
+			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete,customize);
+
+
+			Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
+			btnDel.addEventFilter(ActionEvent.ACTION, event->
+			{
+				/*
+				 * Alert alert = new Alert(AlertType.CONFIRMATION);
+				 * alert.setContentText("Are you sure you want to delete this text box?");
+				 * alert.setHeaderText(null); alert.getButtonTypes().clear();
+				 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+				 * 
+				 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
+				 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+				 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
+				 * 
+				 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
+				 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
+				 * 
+				 * }
+				 */
+
+				root.getChildren().remove(t);
+
+			});
+
+
+			Button btnCustom = (Button)dialog.getDialogPane().lookupButton(customize);
+			btnCustom.addEventFilter(ActionEvent.ACTION, event -> { new CustomizationWindow(t); });
+
+			Optional<String> result = (dialog).showAndWait();
+
+			if (result.isPresent())
+			{
+				t.setTitleText(result.get());
+			}
+
+		}
+
+
+
+		/*
+		 * if(e.getButton().equals(MouseButton.PRIMARY)) { if(isExpanded())
+		 * setExpanded(false); else setExpanded(true); }
+		 */
+	}
 	protected void addTextBox(TextArea t)
 	{
 		String[] inputs = t.getText().split("\n");
@@ -654,7 +804,7 @@ public class Venn extends Stage
 	}
 	private void info() {
 		
-	};
+	}
 	protected void Cdrag(Circle circle, Pane root) {
 		Button b = new Button("OFF");
 		

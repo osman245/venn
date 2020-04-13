@@ -1,6 +1,5 @@
 package Venn;
 
-import java.awt.Event;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -24,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -443,7 +443,7 @@ public class Venn extends Stage
 					t.setYpos(event.getSceneY()-t.getPrefHeight()/2);
 				});
 
-				t.setOnMouseClicked(event -> t.mouseClickEvent(event, t));
+				t.setOnMouseClicked(event -> mouseClickEvent(event, t, root));
 				
 				textBoxes.add(t);
 				//tbPane.getChildren().add(t);
@@ -455,6 +455,72 @@ public class Venn extends Stage
 		});
 
 	}
+	
+	public static void mouseClickEvent(MouseEvent e, TextBox t, Pane root)
+	{
+
+		if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) 
+		{
+			t.expand();
+		}
+		else if(  e.getButton().equals(MouseButton.SECONDARY) && !t.isPreview())
+		{
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Set Text");
+			dialog.setHeaderText(null);
+			dialog.setContentText("");
+			dialog.getDialogPane().getButtonTypes().clear();
+
+			ButtonType delete = new ButtonType("Delete");
+			ButtonType customize = new ButtonType("Customize");
+
+			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete,customize);
+
+
+			Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
+			btnDel.addEventFilter(ActionEvent.ACTION, event->
+			{
+				/*
+				 * Alert alert = new Alert(AlertType.CONFIRMATION);
+				 * alert.setContentText("Are you sure you want to delete this text box?");
+				 * alert.setHeaderText(null); alert.getButtonTypes().clear();
+				 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+				 * 
+				 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
+				 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+				 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
+				 * 
+				 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
+				 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
+				 * 
+				 * }
+				 */
+
+				root.getChildren().remove(t);
+
+			});
+
+
+			Button btnCustom = (Button)dialog.getDialogPane().lookupButton(customize);
+			btnCustom.addEventFilter(ActionEvent.ACTION, event -> { new CustomizationWindow(t); });
+
+			Optional<String> result = (dialog).showAndWait();
+
+			if (result.isPresent())
+			{
+				t.setTitleText(result.get());
+			}
+
+		}
+
+
+
+		/*
+		 * if(e.getButton().equals(MouseButton.PRIMARY)) { if(isExpanded())
+		 * setExpanded(false); else setExpanded(true); }
+		 */
+	}
+
 
 	private void changeCol(Color col, Circle c)
 	{

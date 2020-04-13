@@ -16,12 +16,14 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -43,7 +45,10 @@ public class CustomizationWindow
 	private void StartStage()
 	{
 		s = new Stage();
-		s.setTitle("Customization window");	
+		s.setTitle("Customization window");
+		s.setResizable(false);
+		s.setAlwaysOnTop(true);
+	
 
 		s.setOnCloseRequest(e->{
 
@@ -70,7 +75,7 @@ public class CustomizationWindow
 		});
 
 		//	if(n instanceof TextBox)
-		{
+		//{
 			// things that need to be customized 
 			/*
 			 * TextBox customizations
@@ -129,7 +134,6 @@ public class CustomizationWindow
 			txtCol.setPrefWidth(150);
 			txtCol.setOnAction(e->{txtColour = "#"+ txtCol.getValue().toString().substring(2); updateStyle(); });
 			
-
 			Label lblFont = new Label("Font:");
 			lblFont.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
 
@@ -201,13 +205,13 @@ public class CustomizationWindow
 			lblField.setAlignment(Pos.CENTER);
 			lblField.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px; -fx-font-weight:bold;");
 
-			Label lblFieldCol = new Label("Text Colour:");
-			lblFieldCol.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
-			lblFieldCol.setPrefWidth(150);
+			Label lblfieldCol = new Label("Text Colour:");
+			lblfieldCol.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
+			lblfieldCol.setPrefWidth(150);
 
-			ColorPicker Fieldcol = new ColorPicker(Color.BLACK);
-			Fieldcol.setPrefWidth(150);
-			Fieldcol.setOnAction(e->{fieldTxtCol = "#"+Fieldcol.getValue().toString().substring(2); updateStyle();});
+			ColorPicker fieldCol = new ColorPicker(Color.BLACK);
+			fieldCol.setPrefWidth(150);
+			fieldCol.setOnAction(e->{fieldTxtCol = "#"+fieldCol.getValue().toString().substring(2); updateStyle();});
 
 			Label lblFieldFont = new Label("Font:");
 			lblFieldFont.setStyle("-fx-fill:#8f7a66; -fx-font-size: 15px;");
@@ -235,6 +239,7 @@ public class CustomizationWindow
 			tbPreview = new TextBox();
 			tbPreview.setTitleText("abdcefghijklmnopqrstuvwxyz");
 			tbPreview.setPreview(true);
+			tbPreview.setOnMouseClicked(e->Venn.mouseClickEvent(e, tbPreview, ((TextBox)n).root));
 			updateStyle();
 			
 			Button btnDone = new Button("Done");
@@ -242,6 +247,36 @@ public class CustomizationWindow
 			btnDone.setAlignment(Pos.CENTER);
 			btnDone.setPrefWidth(125);
 			btnDone.setOnAction(e->updateNodeStyle());
+			
+		/*
+		 * //if ( n instanceof TextBox) { // load in the defualt values TextBox t =
+		 * (TextBox)n;
+		 * 
+		 * txtCol.setValue((Color) t.getTextObj().getFill());
+		 * cboFonts.setPromptText(t.getTextObj().getFont().toString());
+		 * sizeSpinner.getValueFactory().setValue((int)t.getTextObj().getFont().getSize(
+		 * )); if(t.getTextObj().getStyle().contains("bold")) {
+		 * chkBold.setSelected(true); } if(t.getTextObj().getStyle().contains("italic"))
+		 * { chkItalic.setSelected(true); }
+		 * if(t.getTextObj().getStyle().contains("underline: true")) {
+		 * chkItalic.setSelected(true); } bgCol.setValue((Color)
+		 * t.getPane().getBackground().getFills().get(0).getFill());
+		 * brCol.setValue((Color)
+		 * t.getPane().getBorder().getStrokes().get(0).getBottomStroke());
+		 * brSizeSpinner.getValueFactory().setValue((int)t.getPane().getBorder().
+		 * getStrokes().get(0).getWidths().getBottom());
+		 * 
+		 * Label l = new Label();
+		 * l.setStyle("-fx-background-color: "+t.getFieldTxtCol());
+		 * fieldCol.setValue((Color) l.getBackground().getFills().get(0).getFill());
+		 * fieldSizeSpinner.getValueFactory().setValue( (int)
+		 * ((TextArea)t.getTextField()).getFont().getSize());
+		 * cboFieldFonts.setPromptText( ((TextArea)
+		 * t.getTextField()).getFont().getFamily() );
+		 * 
+		 * }
+		 */
+			
 			
 			//adding the controls for 
 			root.add(lblTxtBox, 0, 0, 3, 1);
@@ -259,8 +294,8 @@ public class CustomizationWindow
 			root.add(lblBrSize, 0, 7, 1, 1);
 			root.add(brSizeSpinner, 1, 7, 1, 1);
 			root.add(lblField, 0, 8, 3, 1);
-			root.add(lblFieldCol, 0, 9, 1, 1);
-			root.add(Fieldcol, 1, 9, 1, 1);
+			root.add(lblfieldCol, 0, 9, 1, 1);
+			root.add(fieldCol, 1, 9, 1, 1);
 			root.add(lblFieldFont, 0, 10, 1, 1);
 			root.add(cboFieldFonts, 1, 10, 1, 1);
 			root.add(lblFieldTxtSize, 0, 11, 1, 1);
@@ -278,7 +313,7 @@ public class CustomizationWindow
 		}
 
 
-	}
+	//}
 	private void updateNodeStyle() {
 		updateStyle();
 		
@@ -293,6 +328,8 @@ public class CustomizationWindow
 
 	private void updateStyle()
 	{
+		tbPreview.setFieldTxtCol(fieldTxtCol);
+		
 		bgStyle = "-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-background-color: "+txtBGCol+"; -fx-border-color: "+txtBrCol+"; -fx-border-width:"+txtBrWidth+";";
 		txtStyle = "-fx-font-family: "+txtFont+"; -fx-underline: "+txtUnderLine+";-fx-font-size: "+txtFontSize+"; -fx-font-weight: "+txtBold+"; -fx-fill: "+txtColour+"; -fx-font-style: "+txtItalic+";";
 		fieldStyle ="-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-font-family: "+fieldFont+"; -fx-text-fill: "+fieldTxtCol+"; -fx-border-color: "+fieldBrCol+"; -fx-font-size: "+fieldFontSize+";";

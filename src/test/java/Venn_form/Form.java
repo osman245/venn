@@ -49,6 +49,7 @@ public class Form
 		Stage s = new Stage();
 		s.setTitle("Venn Builder Form");
 		s.setResizable(false);
+		s.setAlwaysOnTop(true);
 
 		s.setOnCloseRequest(e->{
 

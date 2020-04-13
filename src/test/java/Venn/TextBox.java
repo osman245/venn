@@ -30,11 +30,12 @@ public class TextBox extends VBox
 
 	private Text t;
 	//private VBox p;
-	private Pane root;
+	Pane root;
 	private TextArea field;
 	private HBox  topRow;
-	private boolean isPreview;
+	boolean isPreview;
 	private boolean expandable;
+	private String fieldTxtCol;
 
 	public TextBox()
 	{
@@ -80,18 +81,29 @@ public class TextBox extends VBox
 
 	}
 
+	public void setFieldTxtCol(String c)
+	{
+		fieldTxtCol = c;
+	}
+	
+	public String getFieldTxtCol()
+	{
+		return fieldTxtCol;
+	}
+	
 	private void setDefaultStyle() 
 	{	
 		String bgStyle = "-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-background-color: "+"transparent"+"; -fx-border-color: "+"black"+"; -fx-border-width:"+1+";";
 		String txtStyle = "-fx-font-family: "+"Arial"+"; -fx-underline: "+"false"+";-fx-font-size: "+15+"; -fx-font-weight: "+"normal"+"; -fx-fill: "+"black"+"; -fx-font-style: "+ "normal"+";";
 		String fieldStyle ="-fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-font-family: "+"Arial"+"; -fx-text-fill: "+"black"+"; -fx-border-color: "+"black"+"; -fx-font-size: "+15+";";
-
+		fieldTxtCol ="black";
+		
 		getTextObj().setStyle(txtStyle);
 		getPane().setStyle(bgStyle);
 		getTextField().setStyle(fieldStyle);
 	}
 
-	private void expand() 
+	void expand() 
 	{
 		if(expandable)
 		{
@@ -120,73 +132,9 @@ public class TextBox extends VBox
 		return expandable;
 	}
 
-	public void mouseClickEvent(MouseEvent e, TextBox t)
-	{
 
-		if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) 
-		{
-			expand();
-		}
-		else if(  e.getButton().equals(MouseButton.SECONDARY) && !isPreview)
-		{
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Set Text");
-			dialog.setHeaderText(null);
-			dialog.setContentText("");
-			dialog.getDialogPane().getButtonTypes().clear();
-
-			ButtonType delete = new ButtonType("Delete");
-			ButtonType customize = new ButtonType("Customize");
-
-			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL,delete,customize);
-
-
-			Button btnDel = (Button)dialog.getDialogPane().lookupButton(delete);
-			btnDel.addEventFilter(ActionEvent.ACTION, event->
-			{
-				/*
-				 * Alert alert = new Alert(AlertType.CONFIRMATION);
-				 * alert.setContentText("Are you sure you want to delete this text box?");
-				 * alert.setHeaderText(null); alert.getButtonTypes().clear();
-				 * alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
-				 * 
-				 * dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
-				 * dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
-				 * dialog.getDialogPane().lookupButton(delete).setDisable(true);
-				 * 
-				 * Optional<ButtonType> result = alert.showAndWait(); if (result.get() ==
-				 * ButtonType.YES) { root.getChildren().remove(b); } else { alert.close();
-				 * 
-				 * }
-				 */
-
-				root.getChildren().remove(t);						
-
-			});
-
-
-			Button btnCustom = (Button)dialog.getDialogPane().lookupButton(customize);
-			btnCustom.addEventFilter(ActionEvent.ACTION, event -> { new CustomizationWindow(this); });
-
-			Optional<String> result = (dialog).showAndWait();
-
-			if (result.isPresent())
-			{
-				if(result.get().length()==0)
-					root.getChildren().remove(getNode());
-				t.setTitleText(result.get());
-			}
-
-		}
-
-
-
-		/*
-		 * if(e.getButton().equals(MouseButton.PRIMARY)) { if(isExpanded())
-		 * setExpanded(false); else setExpanded(true); }
-		 */
-	}
-
+	
+	
 	public Text getTextObj()
 	{
 		return t;

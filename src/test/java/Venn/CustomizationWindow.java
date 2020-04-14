@@ -1,6 +1,5 @@
 package Venn;
 
-import java.awt.Event;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +34,26 @@ public class CustomizationWindow
 	private String txtColour, txtFontSize, txtFont, txtBold, txtUnderLine, txtItalic, txtBGCol, txtBrCol, fieldFont, fieldTxtCol, fieldBrCol, fieldFontSize, txtBrWidth;
 	private Stage s;
 	private TextBox tbPreview;
+	
+	private boolean multi =false;
+	private ArrayList<TextBox> boxes;
+	private ArrayList<Integer> edits;
+	private Stage s2;
 
 	public CustomizationWindow(Node e)
 	{
 		StartStage();
 		n = e;
+	}
+	
+	public CustomizationWindow(Node e, ArrayList<TextBox>allBoxes, ArrayList<Integer> needsEdits,Stage s)
+	{
+		n =e;
+		multi = true;
+		StartStage();
+		this.boxes = allBoxes;
+		this.edits  = needsEdits;
+		s2 =s;
 	}
 
 	private void StartStage()
@@ -48,7 +62,6 @@ public class CustomizationWindow
 		s.setTitle("Customization window");
 		s.setResizable(false);
 		s.setAlwaysOnTop(true);
-	
 
 		s.setOnCloseRequest(e->{
 
@@ -57,6 +70,7 @@ public class CustomizationWindow
 			alert.setContentText("Are you sure you want to discard this form?");
 			alert.setTitle("Exit Form");
 			alert.initModality(Modality.NONE);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
 			alert.showAndWait().ifPresent(response ->{
@@ -239,7 +253,7 @@ public class CustomizationWindow
 			tbPreview = new TextBox();
 			tbPreview.setTitleText("abdcefghijklmnopqrstuvwxyz");
 			tbPreview.setPreview(true);
-			tbPreview.setOnMouseClicked(e->Venn.mouseClickEvent(e, tbPreview, ((TextBox)n).root));
+			tbPreview.expand();
 			updateStyle();
 			
 			Button btnDone = new Button("Done");
@@ -317,11 +331,26 @@ public class CustomizationWindow
 	private void updateNodeStyle() {
 		updateStyle();
 		
+		if( !multi)
+		{
 		TextBox t = (TextBox)n;
 		t.getTextObj().setStyle(txtStyle);
 		t.getPane().setStyle(bgStyle);
 		t.getTextField().setStyle(fieldStyle);
-		
+		}
+		else
+		{
+			for(int i=0; i< edits.size(); i++)
+			{
+				TextBox t = boxes.get(edits.get(i));
+				t.getTextObj().setStyle(txtStyle);
+				t.getPane().setStyle(bgStyle);
+				t.getTextField().setStyle(fieldStyle);
+			}
+			s2.close();
+			
+			
+		}
 		s.close();
 		
 	}
@@ -337,5 +366,8 @@ public class CustomizationWindow
 		tbPreview.getTextObj().setStyle(txtStyle);
 		tbPreview.getPane().setStyle(bgStyle);
 		tbPreview.getTextField().setStyle(fieldStyle);
+		
+		
+		
 	}
 }

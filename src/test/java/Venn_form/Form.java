@@ -51,6 +51,7 @@ public class Form
 		Stage s = new Stage();
 		s.setTitle("Venn Builder Form");
 		s.setResizable(false);
+		s.setAlwaysOnTop(true);
 
 		s.setOnCloseRequest(e->{
 
@@ -59,6 +60,7 @@ public class Form
 			alert.setContentText("Are you sure you want to discard this form?");
 			alert.setTitle("Exit Form");
 			alert.initModality(Modality.NONE);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
 			alert.showAndWait().ifPresent(response ->{

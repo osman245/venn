@@ -75,9 +75,10 @@ public class Venn extends Stage
 	Circle c1 = new Circle();
 	Circle c2 = new Circle();
 	Circle c3 = new Circle();
-	Label label1 = new Label();
-	Label label2 = new Label();
-	Label label3 = new Label();
+	TextBox label1 = new TextBox();
+	TextBox label2 = new TextBox();
+	TextBox label3 = new TextBox();
+	TextBox title = new TextBox();
 	private ArrayList<TextBox> textBoxes;
 
 	private String scan ;
@@ -355,8 +356,7 @@ public class Venn extends Stage
             }
             	
 		});
-			
-			
+						
 		customization.getMenus().addAll(labelcustom,titlecustom,save,circlecustom,backgroundcustom,TextBoxes);
 		root.getChildren().add(customization);
 
@@ -376,14 +376,42 @@ public class Venn extends Stage
 		}
 
 		//setting up the event handlers 
-		//adding the circles to the scene here
+		//adding the circles to the scene here	
+		
+		label1.setExpand(false);
+		label2.setExpand(false);
+		label3.setExpand(false);
+		
+		title.setExpand(false);
+		title.setTitleText("title");
+		textBoxes.add(title);
+		
+		title.setTextStyle("-fx-font-weight:bold; -fx-font-size:25; -fx-underline:true;");
+		title.setLayoutX(maxW/2 - title.getPrefWidth()*2);
+		title.setLayoutY(50);
+		title.setOnMouseClicked(e->mouseClickEvent(e, title, root, textBoxes));
+		title.setOnMouseDragged(e->DragLabel(title, e));
+		
+		
+		
+		
+		if(code.length() == 1)
+		{
+			textBoxes.add(label1);
+			textBoxes.add(label2);
+		}
+		else	
+		{
+			textBoxes.add(label1);
+			textBoxes.add(label2);
+			textBoxes.add(label3);
+		}
+		
 		if(code.equals("1"))
 		{
-
-			label1.setText("Label1");
+			label1.setTitleText("Label1");
 			label1.setLayoutX(maxW/4+10);
 			label1.setLayoutY(maxH/2 - 50);
-
 
 			c1.setRadius(maxW/4.5);
 			c1.setStyle("-fx-fill: #ffbf00");
@@ -391,7 +419,7 @@ public class Venn extends Stage
 			c1.setLayoutX(maxW/4+10);
 			c1.setLayoutY(maxH/2);
 
-			label2.setText("Label2");
+			label2.setTitleText("Label2");
 			label2.setLayoutX(maxW/2);
 			label2.setLayoutY(maxH/2 - 50);
 
@@ -401,8 +429,8 @@ public class Venn extends Stage
 			c2.setLayoutX(maxW/2);
 			c2.setLayoutY(maxH/2);
 
-			label1.setOnMouseClicked(e-> Label_click(label1, e));
-			label2.setOnMouseClicked(e->  Label_click(label2, e));
+			label1.setOnMouseClicked(e-> mouseClickEvent(e, label1, root, textBoxes));
+			label2.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));			
 
@@ -413,7 +441,7 @@ public class Venn extends Stage
 		}
 		else if (code.equals("011"))
 		{
-			Label label1 = new Label("Label1");
+			 label1 = new TextBox("Label1");
 			label1.setLayoutX(maxW/5.5+20);
 			label1.setLayoutY(maxH/2 - 50);
 
@@ -423,7 +451,7 @@ public class Venn extends Stage
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
 
-			Label label2 = new Label("Label2");
+			 label2 = new TextBox("Label2");
 			label2.setLayoutX(maxW/2.75);
 			label2.setLayoutY(maxH/2 - 50);
 
@@ -433,7 +461,7 @@ public class Venn extends Stage
 			c2.setLayoutX(maxW/2.75);
 			c2.setLayoutY(maxH/2);
 
-			Label label3 = new Label("Label3");
+			 label3 = new TextBox("Label3");
 			label3.setLayoutX(maxW/1.85);
 			label3.setLayoutY(maxH/2 - 50);
 
@@ -443,9 +471,9 @@ public class Venn extends Stage
 			c3.setLayoutX(maxW/1.85);
 			c3.setLayoutY(maxH/2);		
 
-			label1.setOnMouseClicked(e-> Label_click(label1, e));
-			label2.setOnMouseClicked(e-> Label_click(label2, e));
-			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			label1.setOnMouseClicked(e-> mouseClickEvent(e, label1, root, textBoxes));
+			label2.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
+			label3.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
 
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
@@ -461,7 +489,7 @@ public class Venn extends Stage
 		}
 		else if (code.equals("110"))
 		{
-			label1.setText("Label1");
+			label1.setTitleText("Label1");
 			label1.setLayoutX(maxW/5.5 + 20);
 			label1.setLayoutY(maxH/2 - 50);
 
@@ -471,7 +499,7 @@ public class Venn extends Stage
 			c1.setLayoutX(maxW/5.5+20);
 			c1.setLayoutY(maxH/2);
 
-			label2.setText("Label2");
+			label2.setTitleText("Label2");
 			label2.setLayoutX(maxW/2.75);
 			label2.setLayoutY(maxH/2 - 50);
 
@@ -481,7 +509,7 @@ public class Venn extends Stage
 			c2.setLayoutX(maxW/2.75);
 			c2.setLayoutY(maxH/2);
 
-			label3.setText("Label2");
+			label3.setTitleText("Label2");
 			label3.setLayoutX(maxW/1.85);
 			label3.setLayoutY(maxH/2 - 50);
 
@@ -491,9 +519,9 @@ public class Venn extends Stage
 			c3.setLayoutX(maxW/1.85);
 			c3.setLayoutY(maxH/2);	
 
-			label1.setOnMouseClicked(e-> Label_click(label1, e));
-			label2.setOnMouseClicked(e-> Label_click(label2, e));
-			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			label1.setOnMouseClicked(e-> mouseClickEvent(e, label1, root, textBoxes));
+			label2.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
+			label3.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
 			label3.setOnMouseDragged(e -> DragLabel(label3,  e));	
@@ -507,7 +535,7 @@ public class Venn extends Stage
 		}
 		else if (code.equals("101"))
 		{
-			label1.setText("Label1");
+			label1.setTitleText("Label1");
 			label1.setLayoutX(maxW/5.5 + 20);
 			label1.setLayoutY(maxH/2 - 50);
 
@@ -518,7 +546,7 @@ public class Venn extends Stage
 			c1.setLayoutY(maxH/2);
 
 			//middle
-			label2.setText("Label2");
+			label2.setTitleText("Label2");
 			label2.setLayoutX(maxW/2.75);
 			label2.setLayoutY(maxH/2 - 50);
 
@@ -528,7 +556,7 @@ public class Venn extends Stage
 			c2.setLayoutX(maxW/2.75);
 			c2.setLayoutY(maxH/2);
 
-			label3.setText("Label3");
+			label3.setTitleText("Label3");
 			label3.setLayoutX(maxW/1.85);
 			label3.setLayoutY(maxH/2 -50);
 
@@ -538,9 +566,9 @@ public class Venn extends Stage
 			c3.setLayoutX(maxW/1.85);
 			c3.setLayoutY(maxH/2);		
 
-			label1.setOnMouseClicked(e-> Label_click(label1, e));
-			label2.setOnMouseClicked(e-> Label_click(label1, e));
-			label3.setOnMouseClicked(e-> Label_click(label1, e));
+			label1.setOnMouseClicked(e-> mouseClickEvent(e, label1, root, textBoxes));
+			label2.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
+			label3.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
 			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
@@ -555,7 +583,7 @@ public class Venn extends Stage
 		else if (code.equals("111"))
 		{	
 
-			label1.setText("Label1");
+			label1.setTitleText("Label1");
 			label1.setLayoutX(maxW/4 + 20);
 			label1.setLayoutY(maxH/1.5 - 50);
 
@@ -566,7 +594,7 @@ public class Venn extends Stage
 			c1.setLayoutX(maxW/4+20);
 			c1.setLayoutY(maxH/1.5);
 
-			label2.setText("Label2");
+			label2.setTitleText("Label2");
 			label2.setLayoutX(maxW/2.5);
 			label2.setLayoutY(maxH/1.5 - 50);
 
@@ -577,7 +605,7 @@ public class Venn extends Stage
 			c2.setLayoutX(maxW/2.5);
 			c2.setLayoutY(maxH/1.5);
 
-			label3.setText("Label3");
+			label3.setTitleText("Label3");
 			label3.setLayoutX(maxW/3.225);
 			label3.setLayoutY(maxH/2.75 - 50);
 
@@ -588,9 +616,9 @@ public class Venn extends Stage
 			c3.setLayoutX(maxW/3.225);
 			c3.setLayoutY(maxH/2.75);
 
-			label1.setOnMouseClicked(e-> Label_click(label1, e));
-			label2.setOnMouseClicked(e-> Label_click(label2, e));
-			label3.setOnMouseClicked(e-> Label_click(label3, e));
+			label1.setOnMouseClicked(e-> mouseClickEvent(e, label1, root, textBoxes));
+			label2.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
+			label3.setOnMouseClicked(e->  mouseClickEvent(e, label2, root, textBoxes));
 			label1.setOnMouseDragged(e -> DragLabel(label1,  e));
 			label2.setOnMouseDragged(e -> DragLabel(label2,  e));
 			label3.setOnMouseDragged(e -> DragLabel(label3,  e));
@@ -601,7 +629,11 @@ public class Venn extends Stage
 			root.getChildren().add(label1);
 			root.getChildren().add(label2);
 			root.getChildren().add(label3);
+		
 		}
+		
+		root.getChildren().add(title);
+	
 	}
 
 	private void createTextBoxAdder() 
@@ -751,37 +783,29 @@ public class Venn extends Stage
 
 	}
 
-	protected void Label_click(Label l,MouseEvent e) {
-		if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
-		{
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Set Label");
-			dialog.setHeaderText(null);
-			dialog.setContentText("");
-			dialog.getDialogPane().getButtonTypes().clear();
-
-
-			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL );
-
-
-			Optional<String> result = (dialog).showAndWait();
-
-			if (result.isPresent())
-			{
-				if(result.get().length()==0) {
-					l.setText(l.getText());
-				}
-				else
-					l.setText(result.get());
-			}	
-		}
-	}
-	protected void DragLabel(Label l, MouseEvent e) {
+	/*
+	 * protected void Label_click(TextBox l,MouseEvent e) { if(
+	 * (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) ||
+	 * e.getButton().equals(MouseButton.SECONDARY)) { TextInputDialog dialog = new
+	 * TextInputDialog(); dialog.setTitle("Set Label"); dialog.setHeaderText(null);
+	 * dialog.setContentText(""); dialog.getDialogPane().getButtonTypes().clear();
+	 * 
+	 * 
+	 * dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK,
+	 * ButtonType.CANCEL );
+	 * 
+	 * 
+	 * Optional<String> result = (dialog).showAndWait();
+	 * 
+	 * if (result.isPresent()) { if(result.get().length()==0) {
+	 * l.setText(l.getText()); } else l.setText(result.get()); } } }
+	 */
+	protected void DragLabel( TextBox l, MouseEvent e) {
 
 		if( e.getButton().equals(MouseButton.PRIMARY))
 		{
-			l.setLayoutX(l.getLayoutX()+e.getX()-l.getWidth()/2);
-			l.setLayoutY(l.getLayoutY()+e.getY()-l.getHeight()/2);
+			l.setXpos(e.getSceneX()-l.getPrefWidth()/2);
+			l.setYpos(e.getSceneY()-l.getPrefHeight()/2);
 		}
 
 	}
@@ -802,15 +826,15 @@ public class Venn extends Stage
 
 		root.getChildren().add(cp);	
 	}
-	protected void Lcolor(Label label,Pane root) {
-		ColorPicker cp = new ColorPicker((Color) label.getTextFill());
+	protected void Lcolor(TextBox label,Pane root) {
+		ColorPicker cp = new ColorPicker((Color) label.getTextObj().getFill());
 		cp.setPrefSize(200, 40);	
 		cp.setLayoutX(root.getPrefWidth());
 		cp.setLayoutY(root.getPrefHeight()+ 100);
 
 		cp.setOnAction(e -> 
 		{
-			label.setTextFill(cp.getValue());
+			label.getTextObj().setFill(cp.getValue());
 			root.getChildren().remove(cp);
 		});
 

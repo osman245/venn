@@ -292,6 +292,7 @@ public class Venn extends Stage
 	    		ImageIO.write(image, "jpeg", new File("Venn.JPEG"));
 				display.setImage(capture);
 	    	}
+	    	
 	    	catch (Exception exe) {
 	    		exe.printStackTrace();
 	    	}

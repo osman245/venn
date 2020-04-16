@@ -45,6 +45,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -82,7 +84,7 @@ public class Venn extends Stage
 
 	private String scan ;
 	private String codeTxt;	
-
+	ImageView display = new ImageView();
 	public Venn()
 	{
 		startStage();
@@ -267,8 +269,32 @@ public class Venn extends Stage
 
 		//save
 		Menu save = new Menu("Save");
-		MenuItem saveItem = new MenuItem("Save");
-		save.getItems().add(saveItem);
+		MenuItem saveItem = new MenuItem("Save as Importable File");
+		MenuItem savePng = new MenuItem("Save as image");
+		save.getItems().addAll(saveItem,savePng);
+		savePng.setOnAction(e -> {
+			
+			FileChooser fileChooser = new FileChooser();
+
+            //Set extension filter for text files
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPEG (.JPEG)", ".JPEG");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            //Show save file dialog
+            File file = fileChooser.showSaveDialog(this);
+            
+	    	try {
+	    		Robot robot = new Robot();
+	    		Rectangle pic = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+	    		BufferedImage image = robot.createScreenCapture(pic);
+	    		Image capture = SwingFXUtils.toFXImage(image, null);
+	    		ImageIO.write(image, "jpeg", new File("Venn.JPEG"));
+				display.setImage(capture);
+	    	}
+	    	catch (Exception exe) {
+	    		exe.printStackTrace();
+	    	}
+	    });
 		saveItem.setOnAction(e -> {
 			 FileChooser fileChooser = new FileChooser();
 
@@ -280,6 +306,8 @@ public class Venn extends Stage
 	            File file = fileChooser.showSaveDialog(this);
 
 	            if (file != null) {
+	            	
+	            
 	            	try {
 	                     PrintWriter writer;
 	                     writer = new PrintWriter(file);
@@ -291,7 +319,7 @@ public class Venn extends Stage
 	                 }
 	            }
 		});
-		
+			
 		Button info = new Button("Press for HELP");
 		info.setLayoutX(getX() + 50);
 		info.setLayoutY(maxH - 100);
@@ -603,6 +631,7 @@ public class Venn extends Stage
 			root.getChildren().add(label3);
 		}
 	}
+	
 
 	private void createTextBoxAdder() 
 	{
@@ -737,19 +766,9 @@ public class Venn extends Stage
 			}
 
 		}
-
-
-
-		/*
-		 * if(e.getButton().equals(MouseButton.PRIMARY)) { if(isExpanded())
-		 * setExpanded(false); else setExpanded(true); }
-		 */
 	}
 
 
-	protected void SaveVenn(TextArea t) throws IOException {
-
-	}
 
 	protected void Label_click(Label l,MouseEvent e) {
 		if( (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 ) || e.getButton().equals(MouseButton.SECONDARY))
@@ -816,9 +835,7 @@ public class Venn extends Stage
 
 		root.getChildren().add(cp);	
 	}
-	private void info() {
-
-	}
+	
 	protected void Cdrag(Circle circle, Pane root) {
 		Button b = new Button("OFF");
 
@@ -861,9 +878,7 @@ public class Venn extends Stage
 		root.getChildren().add(cp);
 	}
 
-	public void saveAsPng() {
-
-	}
+	
 	void Csize(Circle c,Pane root) {
 
 		Slider x = new Slider();
@@ -893,10 +908,7 @@ public class Venn extends Stage
 		
 		
 	}
-	private void LabelCustom(Label label, Pane rootOrigin) 
-	{
+	
 
-
-	}
 
 }

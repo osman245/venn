@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 public class Form 
 {
 	Button b;
+	Venn vLoad = new Venn();
 	//List<Boolean> selections;
 	private GridPane root;
 	private VBox test = new VBox(20);
@@ -38,6 +39,7 @@ public class Form
 	private ImageView i;
 	private Label preview;
 	private Button btnDone;
+	
 
 	public Form()
 	{
@@ -239,6 +241,7 @@ public class Form
 					btnDone.setVisible(true);
 					btnDone.setDisable(false);
 					System.out.println(codeTxt);
+					vLoad.CodeText(codeTxt);
 				}
 				else
 				{

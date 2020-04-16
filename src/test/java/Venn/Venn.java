@@ -3,12 +3,18 @@ package Venn;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
@@ -24,6 +30,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -49,6 +56,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -70,7 +78,8 @@ public class Venn extends Stage
 	Label label3 = new Label();
 	private ArrayList<TextBox> textBoxes;
 
-
+	private String scan ;
+	private String codeTxt;	
 
 	public Venn()
 	{
@@ -225,6 +234,7 @@ public class Venn extends Stage
 		TextBoxes.getItems().add(CTextBox);
 		CTextBox.setOnAction(e-> new MultiEdit(textBoxes, root));
 		
+		
 		//labels
 		Menu labelcustom = new Menu("Labels");
 		Menu lcolor = new Menu("Label color");
@@ -276,33 +286,78 @@ public class Venn extends Stage
 
 		//save
 		Menu save = new Menu("Save");
-		save.setOnAction(e -> {
-			/*  // the content of scrollPane is saved as a JPEG file.
-		    WritableImage img = root.snapshot(new SnapshotParameters(), null);
-		    JFileChooser chooser = new JFileChooser();
-		    chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-		    BufferedImage img2 = SwingFXUtils.fromFXImage(img, null);
-		    int result = chooser.showSaveDialog(null);
-		    if (result == JFileChooser.APPROVE_OPTION) {
-		        try {
-		            File fileToSave = chooser.getSelectedFile();
-		            ImageIO.write(img2, "png", fileToSave);
-		        } catch (IOException ex) {
-		          //  Logger.getLogger(GuiClass.class.getName()).log(Level.SEVERE, null, ex);
-		        }
-		    }*/
-			WritableImage writableImage = 
-					new WritableImage((int)root.getWidth(), (int)root.getHeight());
-			scene.snapshot(writableImage);
+		MenuItem saveItem = new MenuItem("Save");
+		save.getItems().add(saveItem);
+		saveItem.setOnAction(e -> {
+			 FileChooser fileChooser = new FileChooser();
 
-			File file = new File("snapshot.png");
-			try {
-				ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
-				System.out.println("snapshot saved: " + file.getAbsolutePath());
-			} catch (IOException ex) {
-				//Logger.getLogger(JavaFXSnapshot.class.getName()).log(Level.SEVERE, null, ex);
-			}
+	            //Set extension filter for text files
+	            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (.txt)", ".txt");
+	            fileChooser.getExtensionFilters().add(extFilter);
+
+	            //Show save file dialog
+	            File file = fileChooser.showSaveDialog(this);
+
+	            if (file != null) {
+	            	try {
+	                     PrintWriter writer;
+	                     writer = new PrintWriter(file);
+	                     for(int i = 0; i <textBoxes.size();i++)
+	                     writer.println(textBoxes.get(i).toString());
+	                     writer.close();
+	                 } catch (IOException ex) {
+	                     Logger.getLogger(Venn.class.getName()).log(Level.SEVERE, null, ex);
+	                 }
+	            }
 		});
+		
+		initLoad.setOnAction(e ->{
+			init.setDisable(true);
+			initLoad.setDisable(true);
+
+			FileChooser load = new FileChooser();
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (.txt)", ".txt");
+            load.getExtensionFilters().add(extFilter);
+           
+            File file = load.showOpenDialog(this);
+            if(file != null) {
+            ArrayList<String> array = new ArrayList();
+            int counter = 0;
+            try (Scanner scanner = new Scanner(file)) {
+                 
+				while (scanner.hasNextLine())
+                  scan = scanner.nextLine();
+                if(counter != 0) {
+                array.add(scan);
+                }
+                counter++;
+                
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            }
+           try {
+			init(this.codeTxt);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+            for(int i = 0; i < array.size();i++) {
+            	String [] split = array.get(i).split(",");
+            	TextBox c = new TextBox(split[1]);
+            	c.setFieldTxtCol(split[2]);
+            	c.setStyle(split[3]);
+            	c.getPane().setStyle(split[4]);
+            	c.getTextField().setStyle(split[5]);
+            	c.setXpos(Double.parseDouble(split[6]));
+            	c.setYpos(Double.parseDouble(split[7]));
+            	root.getChildren().add(c);
+            	
+            }
+            }
+            	
+		});
+			
+			
 		customization.getMenus().addAll(labelcustom,titlecustom,save,circlecustom,backgroundcustom,TextBoxes);
 		root.getChildren().add(customization);
 
@@ -550,11 +605,6 @@ public class Venn extends Stage
 		}
 	}
 
-
-
-
-
-
 	private void createTextBoxAdder() 
 	{
 		// TODO Auto-generated method stub
@@ -697,30 +747,7 @@ public class Venn extends Stage
 		 */
 	}
 
-	/*
-	 * OUTDATED METHOD
-	 * protected void addTextBox(TextArea t) { String[] inputs =
-	 * t.getText().split("\n"); int c=0;
-	 * 
-	 * for(int i=0; i< inputs.length; i++) { //-fx-border-color: #8f7a66
-	 * if(!inputs[i].isEmpty() && inputs[i].trim().length()>0) {
-	 * 
-	 * TextBox tb = new TextBox(); //tb.setSize(100, 30); //tb.setPrefWidth(100);
-	 * tb.setTitleText(inputs[i]);
-	 * //tb.setContainerStyle("-fx-background-color: green;"); tb.
-	 * setTextStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;"
-	 * ); tb.setRoot(root); tb.setXpos(maxW-tb.getPrefWidth()-40);
-	 * tb.setYpos(tb.getPrefHeight()*c);
-	 * 
-	 * c++;
-	 * 
-	 * root.getChildren().add(tb); } }
-	 * 
-	 * //clear the text area t.clear();
-	 * 
-	 * //add window limits so you cant drag off screen //going to add right click to
-	 * access options }
-	 */
+
 	protected void SaveVenn(TextArea t) throws IOException {
 
 	}
@@ -861,6 +888,16 @@ public class Venn extends Stage
 	public  ArrayList<TextBox> getTextBoxes() {
 		// TODO Auto-generated method stub
 		return textBoxes;
+	}
+	public void CodeText(String codeTxt) {
+		this.codeTxt = codeTxt;
+		
+		
+	}
+	private void LabelCustom(Label label, Pane rootOrigin) 
+	{
+
+
 	}
 
 }

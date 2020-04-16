@@ -197,28 +197,10 @@ public class Venn extends Stage
 	public void init(String code) throws IOException
 	{
 		//init.setVisible(false);
+		CodeText(code);
 		root.getChildren().clear();
 
-		//clicking this will parse a text area and every new line will create a new text field
-
-		//obsolete code
-		/*
-		 * Button add = new Button("add text boxes"); add.setPrefSize(200, 40);
-		 * add.setLayoutX(maxW-add.getPrefWidth()-15);
-		 * add.setLayoutY(maxH-add.getPrefHeight()); add.
-		 * setStyle("-fx-text-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66"
-		 * );
-		 * 
-		 * TextArea ta = new TextArea(); ta.setPrefSize(200, maxH/2);
-		 * ta.setLayoutX(maxW-ta.getPrefWidth()-15);
-		 * ta.setLayoutY(maxH-ta.getPrefHeight()-add.getPrefHeight()-20); ta.
-		 * setStyle("-fx-text-fill: black; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;-fx-background-color: #8f7a66"
-		 * ); ta.setWrapText(true);
-		 * 
-		 * add.setOnAction(e->addTextBox(ta));
-		 * 
-		 * root.getChildren().addAll(add,ta);
-		 */
+		
 
 		// new text box adder is here
 		createTextBoxAdder();

@@ -61,7 +61,7 @@ public class Form
 			alert.setHeaderText(null);
 			alert.setContentText("Are you sure you want to discard this form?");
 			alert.setTitle("Exit Form");
-			alert.initModality(Modality.NONE);
+			//alert.initModality(Modality.NONE);
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);

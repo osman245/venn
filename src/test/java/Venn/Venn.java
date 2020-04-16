@@ -102,7 +102,7 @@ public class Venn extends Stage
 			alert.setHeaderText(null);
 			alert.setContentText("Are you sure you want to exit?");
 			alert.setTitle("Exit Form");
-			alert.initModality(Modality.NONE);
+			//alert.initModality(Modality.NONE);
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
 			alert.showAndWait().ifPresent(response ->{

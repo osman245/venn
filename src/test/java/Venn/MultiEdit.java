@@ -38,7 +38,7 @@ public class MultiEdit  {
 			alert.setHeaderText(null);
 			alert.setContentText("MUST SELECT ATLEAST 1 TEXTBOX TO EDIT");
 			alert.setTitle("ERROR");
-			alert.initModality(Modality.NONE);
+		//	alert.initModality(Modality.NONE);
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.show();
 		}
@@ -63,7 +63,7 @@ public class MultiEdit  {
 			alert.setHeaderText(null);
 			alert.setContentText("Are you sure you want to discard this form?");
 			alert.setTitle("Exit Form");
-			alert.initModality(Modality.NONE);
+		//	alert.initModality(Modality.NONE);
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
@@ -166,7 +166,7 @@ public class MultiEdit  {
 		alert.setHeaderText(null);
 		alert.setContentText("Are you sure you want to delete these text boxes?");
 		alert.setTitle("delete selected");
-		alert.initModality(Modality.NONE);
+	//	alert.initModality(Modality.NONE);
 		((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		alert.getButtonTypes().clear();
 		alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
@@ -195,7 +195,7 @@ public class MultiEdit  {
 			alert.setHeaderText(null);
 			alert.setContentText("MUST SELECT ATLEAST 1 TEXTBOX TO DELETE");
 			alert.setTitle("ERROR");
-			alert.initModality(Modality.NONE);
+			//alert.initModality(Modality.NONE);
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.show();
 		}
@@ -242,7 +242,7 @@ public class MultiEdit  {
 			alert.setHeaderText(null);
 			alert.setContentText("MUST SELECT ATLEAST 1 TEXTBOX TO EDIT");
 			alert.setTitle("ERROR");
-			alert.initModality(Modality.NONE);
+			//alert.initModality(Modality.NONE);
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.show();
 		}

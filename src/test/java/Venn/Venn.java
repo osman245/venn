@@ -214,20 +214,17 @@ public class Venn extends Stage
 		// new text box adder is here
 		createTextBoxAdder();
 
-
-		//temp button to be added to menu bar
-		Button btnMultiEdit = new Button("multi edit");
-		btnMultiEdit.setOnAction(e-> new MultiEdit(textBoxes, root));
-		btnMultiEdit.setLayoutY(200);
-		root.getChildren().add(btnMultiEdit);
-
-
-
 		//----------------MENU BAR---------------------------
 		MenuBar customization = new MenuBar();
 		customization.setLayoutX(root.getPrefWidth());
 		customization.setLayoutY(root.getPrefHeight());
-
+		
+		//textboxes
+		Menu TextBoxes = new Menu("TextBoxes");
+		MenuItem CTextBox = new MenuItem("Customize Textboxes");
+		TextBoxes.getItems().add(CTextBox);
+		CTextBox.setOnAction(e-> new MultiEdit(textBoxes, root));
+		
 		//labels
 		Menu labelcustom = new Menu("Labels");
 		Menu lcolor = new Menu("Label color");
@@ -236,12 +233,9 @@ public class Venn extends Stage
 		MenuItem l3color = new MenuItem("label3");
 		MenuItem lfont = new Menu("Label font");
 		MenuItem lsize = new Menu("Label size");
-
 		l1color.setOnAction(e ->Lcolor(label1,root));
 		l2color.setOnAction(e ->Lcolor(label2,root));
 		l3color.setOnAction(e ->Lcolor(label3,root));
-
-
 		labelcustom.getItems().addAll(lcolor,lfont,lsize);
 
 		//title
@@ -249,27 +243,22 @@ public class Venn extends Stage
 		MenuItem tcolor = new MenuItem("Title color");
 		MenuItem tfont = new MenuItem("Title font");
 		MenuItem tsize = new MenuItem("Title size");
-
 		titlecustom.getItems().addAll(tcolor,tfont,tsize);
 
 		//circles
 		Menu circlecustom = new Menu("Circle");
-
 		Menu ccolor = new Menu("Circle color");
 		MenuItem c1color = new MenuItem("circle1");
 		MenuItem c2color = new MenuItem("circle2");
 		MenuItem c3color = new MenuItem("circle3");
-
 		Menu csize = new Menu("Circle size");
 		MenuItem c1size = new MenuItem("circle1");
 		MenuItem c2size = new MenuItem("circle2");
 		MenuItem c3size = new MenuItem("circle3");
-
 		Menu cdrag = new Menu("Circle drag");
 		MenuItem c1drag = new MenuItem("c1drag");
 		MenuItem c2drag = new MenuItem("c2drag");
 		MenuItem c3drag = new MenuItem("c3drag");
-
 		circlecustom.getItems().addAll(ccolor,csize,cdrag);
 
 		//background
@@ -277,16 +266,12 @@ public class Venn extends Stage
 		MenuItem bcolor = new MenuItem("Background color");
 		backgroundcustom.getItems().add(bcolor);
 		bcolor.setOnAction(e -> Bcolor(scene,root));
-
-
 		c1color.setOnAction(e -> Ccolor(c1,root));
 		c2color.setOnAction(e -> Ccolor(c2,root));
 		c3color.setOnAction(e -> Ccolor(c3,root));
 		c1size.setOnAction(e -> Csize(c1,root));
 		c2size.setOnAction(e -> Csize(c2,root));
 		c3size.setOnAction(e -> Csize(c3,root));
-
-
 		c1drag.setOnAction(e -> Cdrag(c1,root));
 
 		//save
@@ -318,7 +303,7 @@ public class Venn extends Stage
 				//Logger.getLogger(JavaFXSnapshot.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		});
-		customization.getMenus().addAll(labelcustom,titlecustom,save,circlecustom,backgroundcustom);
+		customization.getMenus().addAll(labelcustom,titlecustom,save,circlecustom,backgroundcustom,TextBoxes);
 		root.getChildren().add(customization);
 
 		if(code.length() == 1)

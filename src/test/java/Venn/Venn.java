@@ -201,9 +201,8 @@ public class Venn extends Stage
 		//init.setVisible(false);
 		CodeText(code);
 		root.getChildren().clear();
-
 		
-
+		
 		// new text box adder is here
 		createTextBoxAdder();
 
@@ -297,7 +296,7 @@ public class Venn extends Stage
 		
 		Button info = new Button("Press for HELP");
 		info.setLayoutX(getX() + 50);
-		info.setLayoutY(getY() + 625);
+		info.setLayoutY(maxH - 100);
 		info.setStyle("-fx-fill:#8f7b77; -fx-font-size: 15px; -fx-font-weight:bold;");
 		
 		info.setOnAction(e -> {

@@ -249,10 +249,6 @@ public class MultiEdit  {
 		else
 			new CustomizationWindow(dummy,boxes ,tempList, s);
 
-
-
-
-
 	}
 
 }

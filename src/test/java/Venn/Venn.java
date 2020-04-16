@@ -148,8 +148,6 @@ public class Venn extends Stage
 		txtLoad.setFontSmoothingType(FontSmoothingType.GRAY);
 		txtLoad.setStyle("-fx-fill: white; -fx-font-family: Clear Sans; -fx-font-size: 18px; -fx-font-weight:bold;");
 
-
-
 		init = new Button();
 		init.setGraphic(txtInit);
 		init.setStyle("-fx-background-color: #8f7a66;");
@@ -300,24 +298,14 @@ public class Venn extends Stage
 		info.setStyle("-fx-fill:#8f7b77; -fx-font-size: 15px; -fx-font-weight:bold;");
 		
 		info.setOnAction(e -> {
-			GridPane rootI = new GridPane();
-			rootI.setPrefSize(400, 550);
-			rootI.setPadding(new Insets(20,15,20,15));
-			rootI.setAlignment(Pos.TOP_CENTER);
-			rootI.setHgap(20);
-			rootI.setVgap(20);
 			
-			Text t1 = new Text("To customize any of the Labels, Textboxes, Cirlces or Title click the option in the Menu and select what you want");
-			t1.setLayoutX(rootI.getMaxWidth() + 50);
-			t1.setLayoutY(rootI.getMaxHeight() + 50);
-			
-			Text t2 = new Text("To save click the save option in the Menu");
-			t2.setLayoutX(rootI.getMaxWidth() + 50);
-			t2.setLayoutY(rootI.getMaxHeight() + 100);
-			
-			
-			rootI.getChildren().addAll(t1,t2);
-			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setContentText("To customize any of the Labels, Textboxes, Cirlces or Title click the option in the Menu and select what you want\n"
+					+ "To save click the save option in the Menu");
+			alert.setTitle("Info");
+			//alert.initModality(Modality);
+			alert.show();		
 			
 		});
 		
